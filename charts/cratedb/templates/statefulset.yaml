@@ -47,11 +47,13 @@ spec:
           {{- if .Values.resources.limits.cpu }}
           - -Cprocessors={{ .Values.resources.limits.cpu }}
           {{- end }}
-        volumeMounts:
-          - mountPath: /data
-            name: data
         resources:
-{{ toYaml .Values.resources | indent 10 }}
+  {{ toYaml .Values.resources | indent 10 }}
+        livenessProbe:
+          exec:
+            command: ["sh", "-c", "curl http://localhost:4200 2&>/dev/null | grep '\"ok\" : true'"]
+          initialDelaySeconds: 240
+          periodSeconds: 60
         ports:
         - containerPort: {{ .Values.service.adminPort }}
           name: {{ .Values.service.adminName }}
@@ -70,11 +72,9 @@ spec:
           value: {{ .Values.crate.recoverAfterNodes | quote }}
         - name: MINIMUM_MASTER_NODES
           value: {{ .Values.crate.minimumMasterNodes | quote }}
-        livenessProbe:
-          exec:
-            command: ["sh", "-c", "curl http://localhost:4200 2&>/dev/null | grep '\"ok\" : true'"]
-          initialDelaySeconds: 240
-          periodSeconds: 60
+        volumeMounts:
+          - mountPath: /data
+            name: data
 {{- if .Values.persistentVolume.enabled }}
   volumeClaimTemplates:
   - metadata:
@@ -95,6 +95,7 @@ spec:
           storageClassName: "{{ .Values.persistentVolume.storageClass }}"
       {{- end }}
 {{- else }}
+      volumes:
       - name: data
         emptyDir: {}
 {{- end }}
