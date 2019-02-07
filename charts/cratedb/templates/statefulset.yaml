@@ -65,6 +65,11 @@ spec:
           value: {{ .Values.crate.recoverAfterNodes | quote }}
         - name: MINIMUM_MASTER_NODES
           value: {{ .Values.crate.minimumMasterNodes | quote }}
+        livenessProbe:
+          exec:
+            command: ["sh", "-c", "curl http://localhost:4200 2&>/dev/null | grep '\"ok\" : true'"]
+          initialDelaySeconds: 240
+          periodSeconds: 60
         volumeMounts:
           - mountPath: /data
             name: data
