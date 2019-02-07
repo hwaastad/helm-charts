@@ -10,10 +10,12 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+  - port: {{ .Values.service.adminPort }}
+    name: {{ .Values.service.adminName }}
+  - port: {{ .Values.service.clusterPort }}
+    name: {{ .Values.service.clusterName }}
+  - port: {{ .Values.service.postgresPort }}
+    name: {{ .Values.service.postgresName }}
   selector:
     app.kubernetes.io/name: {{ include "cratedb.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}

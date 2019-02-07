@@ -1,48 +1,38 @@
-# Default values for cratedb.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+adminName: crate-web
+  adminPort: 4200
+  clusterName: cluster
+  clusterPort: 4300
+  # https://crate.io/docs/crate/reference/en/latest/interfaces/postgres.html
+  postgresName: postgres
+  postgresPort: 5432
 
-replicaCount: 1
+ # 2) The StatefulSet forming the cluster. Read more:
+# https://crate.io/docs/crate/guide/en/latest/scaling/multi-node-setup.html#id10
+# https://crate.io/docs/crate/reference/en/latest/config/environment.html#use-max-50-of-available-ram
+crate:
+  clusterName: my-cluster
+  crateHeapSize: 1g
+  recoverAfterNodes: 1
+  replicas: 1  # If you want more replicas, checkout the links above.
+  recoverAfterTime: 5m
+  minimumMasterNodes: 1
 
-image:
-  repository: nginx
-  tag: stable
-  pullPolicy: IfNotPresent
+ http:
+  cors:
+    enabled: false
+    allowOrigin: "*"
 
-nameOverride: ""
-fullnameOverride: ""
+ # 3) Resources and Volumes.
+resources:
+  requests:
+    memory: 1Gi
+  limits:
+    memory: 2Gi
 
-service:
-  type: ClusterIP
-  port: 80
-
-ingress:
-  enabled: false
+ persistentVolume:
+  enabled: true
+  storageClass: retain
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi  # Per instance
   annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  paths: []
-  hosts:
-    - chart-example.local
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
-
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #  cpu: 100m
-  #  memory: 128Mi
-  # requests:
-  #  cpu: 100m
-  #  memory: 128Mi
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
