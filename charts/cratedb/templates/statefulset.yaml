@@ -75,27 +75,18 @@ spec:
         volumeMounts:
           - mountPath: /data
             name: data
-{{- if .Values.persistentVolume.enabled }}
+      volumes:
+{{- if .Values.persistence.enabled }}
   volumeClaimTemplates:
   - metadata:
       name: data
-    annotations:
-        {{- range $key, $value := .Values.persistentVolume.annotations }}
-          {{ $key }}: {{ $value }}
-        {{- end }}
     spec:
-      accessModes:
-        {{- range .Values.persistentVolume.accessModes }}
-          - {{ . | quote }}
-        {{- end }}
+      accessModes: [ {{ .Values.persistence.accessMode | quote }} ]
+      storageClassName: {{ .Values.persistence.storageClass | quote }}
       resources:
         requests:
-          storage: {{ .Values.persistentVolume.size | quote }}
-      {{- if .Values.persistentVolume.storageClass }}
-          storageClassName: "{{ .Values.persistentVolume.storageClass }}"
-      {{- end }}
-{{- else }}
-      volumes:
+          storage: {{ .Values.persistence.size }}
+  {{- else}}
       - name: data
         emptyDir: {}
-{{- end }}
+  {{- end}}
