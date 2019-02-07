@@ -12,11 +12,10 @@ spec:
     metadata:
       labels:
         app: {{ .Values.app }}
-        labels:
-          app.kubernetes.io/name: {{ include "cratedb.name" . }}
-          helm.sh/chart: {{ include "cratedb.chart" . }}
-          app.kubernetes.io/instance: {{ .Release.Name }}
-          app.kubernetes.io/managed-by: {{ .Release.Service }}
+        app.kubernetes.io/name: {{ include "cratedb.name" . }}
+        helm.sh/chart: {{ include "cratedb.chart" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
       annotations:
         pod.alpha.kubernetes.io/initialized: "true"
     spec:
@@ -49,8 +48,8 @@ spec:
           - -Cprocessors={{ .Values.resources.limits.cpu }}
           {{- end }}
         volumeMounts:
-            - mountPath: /data
-              name: data
+          - mountPath: /data
+            name: data
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         ports:
@@ -80,7 +79,7 @@ spec:
   volumeClaimTemplates:
     - metadata:
         name: data
-        annotations:
+      annotations:
         {{- range $key, $value := .Values.persistentVolume.annotations }}
           {{ $key }}: {{ $value }}
         {{- end }}
