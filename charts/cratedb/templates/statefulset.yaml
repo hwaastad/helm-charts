@@ -77,25 +77,24 @@ spec:
           periodSeconds: 60
 {{- if .Values.persistentVolume.enabled }}
   volumeClaimTemplates:
-    - metadata:
-        name: data
-      annotations:
+  - metadata:
+      name: data
+    annotations:
         {{- range $key, $value := .Values.persistentVolume.annotations }}
           {{ $key }}: {{ $value }}
         {{- end }}
-      spec:
-        accessModes:
+    spec:
+      accessModes:
         {{- range .Values.persistentVolume.accessModes }}
           - {{ . | quote }}
         {{- end }}
-        resources:
-          requests:
-            storage: {{ .Values.persistentVolume.size | quote }}
+      resources:
+        requests:
+          storage: {{ .Values.persistentVolume.size | quote }}
       {{- if .Values.persistentVolume.storageClass }}
-        storageClassName: "{{ .Values.persistentVolume.storageClass }}"
+          storageClassName: "{{ .Values.persistentVolume.storageClass }}"
       {{- end }}
 {{- else }}
-        - name: data
-          emptyDir:
-            medium: "Memory"
+      - name: data
+        emptyDir: {}
 {{- end }}
