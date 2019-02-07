@@ -76,7 +76,7 @@ spec:
           - mountPath: /data
             name: data
       volumes:
-{{- if .Values.persistence.enabled }}
+{{- if .Values.persistentVolume.enabled }}
   volumeClaimTemplates:
   - metadata:
       name: data
