@@ -45,7 +45,7 @@ resources:
   limits:
     memory: 2Gi
 
-persistentVolume:
+persistence:
   enabled: true
   storageClass: longhorn-one-replica
   accessModes:
