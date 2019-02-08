@@ -47,7 +47,7 @@ resources:
 
 persistentVolume:
   enabled: true
-  storageClass: retain
+  storageClass: longhorn-one-replica
   accessModes:
     - ReadWriteOnce
   size: 10Gi  # Per instance
