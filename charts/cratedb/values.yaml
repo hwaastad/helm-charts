@@ -38,6 +38,20 @@ http:
     enabled: false
     allowOrigin: "*"
 
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  paths: []
+  hosts:
+    - chart-example.local
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+
 # 3) Resources and Volumes.
 resources:
   requests:
