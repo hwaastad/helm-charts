@@ -30,11 +30,9 @@ spec:
     - host: {{ . | quote }}
       http:
         paths:
-    {{- range $ingressPaths }}
-          - path: {{ . }}
+          - path: /
             backend:
               serviceName: {{ .Values.service.adminName }}
               servicePort: {{ .Values.service.adminPort }}
-    {{- end }}
   {{- end }}
 {{- end }}
