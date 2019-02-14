@@ -25,20 +25,19 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           imagePullSecrets: {{ .Values.image.pullSecrets }}
           initContainers:
-            - command:
-              - /telegraf/fetch_config.py
-              env:
-                - name: CONFIGS
-                  value: wlc
-                - name: LOCATION
-                  value: Rådhuset
-              image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag }}"
-              imagePullPolicy: Always
-              name: telegraf-snmp-init
-        volumeMounts:
-        - mountPath: /telegraf/conf.d
-          name: config-vol
-
+          - command:
+            - /telegraf/fetch_config.py
+            env:
+              - name: CONFIGS
+                value: wlc
+              - name: LOCATION
+                value: Rådhuset
+            image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag }}"
+            imagePullPolicy: Always
+            name: telegraf-snmp-init
+            volumeMounts:
+              - mountPath: /telegraf/conf.d
+                name: config-vol
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
