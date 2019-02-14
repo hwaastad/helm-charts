@@ -24,6 +24,11 @@ spec:
           image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           imagePullSecrets: {{ .Values.image.pullSecrets }}
+          volumeMounts:
+            - mountPath: /telegraf/conf.d
+              name: config-vol
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
           initContainers:
           - command:
             - /telegraf/fetch_config.py
@@ -38,8 +43,6 @@ spec:
             volumeMounts:
               - mountPath: /telegraf/conf.d
                 name: config-vol
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
