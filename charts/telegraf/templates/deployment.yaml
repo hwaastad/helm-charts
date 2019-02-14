@@ -21,20 +21,24 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: template "artemis.image" .
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+          imagePullSecrets: {{ .Values.image.pullSecrets }}
+          initContainers:
+            - command:
+              - /telegraf/fetch_config.py
+              env:
+                - name: CONFIGS
+                  value: wlc
+                - name: LOCATION
+                  value: Rådhuset
+              image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag }}"
+              imagePullPolicy: Always
+              name: telegraf-snmp-init
+        volumeMounts:
+        - mountPath: /telegraf/conf.d
+          name: config-vol
+
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -49,3 +53,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+      volumes:
+      - emptyDir:
+          sizeLimit: 1Mi
+        name: config-vol
