@@ -33,6 +33,7 @@ spec:
         volumeMounts:
           - mountPath: /telegraf/conf.d
             name: config-vol
+{{- with .Values.nodeSelector }}
       nodeSelector:
 {{- toYaml . | nindent 8 }}
 {{- end }}
@@ -54,7 +55,6 @@ spec:
               name: config-vol
           resources:
 {{- toYaml .Values.resources | nindent 12 }}
-{{- with .Values.nodeSelector }}
       volumes:
       - emptyDir:
           sizeLimit: 1Mi
