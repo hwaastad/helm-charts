@@ -22,7 +22,7 @@ questions:
     label: Image Tag For Telegraf Image
 - variable: collection.configs
   default: "wlc"
-  description: "The image tag of Telegraf image"
+  description: "Comma separated list of classes to collect (supported: wlc, switch)"
   type: string
   label: Config classes
 - variable: collection.community
@@ -30,3 +30,23 @@ questions:
   description: "The image tag of Telegraf image"
   type: password
   label: SNMP Community
+- variable: collection.midpassword
+  default: "xxx"
+  description: "The password for the mid api user"
+  type: password
+  label: MID user password
+- variable: collection.miduser
+  default: "mid"
+  description: "The MID api user"
+  type: string
+  label: MID user password
+- variable: collection.midurl
+  default: "http://mid-k8s:8097/api/mid/sa/metrics"
+  description: "The MID metrics url"
+  type: string
+  label: MID metrics url
+- variable: collection.location
+  default: "Rådhuset"
+  description: "SNMP location to scrape"
+  type: string
+  label: SNMP location
