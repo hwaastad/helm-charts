@@ -31,4 +31,3 @@ questions:
     description: "SNMP location to fetch"
     type: string
     label: SNMP Location
-    group: "Environment Variables"
