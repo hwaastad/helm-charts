@@ -27,7 +27,7 @@ spec:
             value: wlc
           - name: LOCATION
             value: Rådhuset
-        image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag }}"
+        image: "{{ .Values.initImage.name }}:{{ .Values.initImage.tag }}"
         imagePullPolicy: Always
         name: telegraf-snmp-init
         volumeMounts:
