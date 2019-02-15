@@ -19,40 +19,68 @@ spec:
         app.kubernetes.io/name: {{ include "telegraf.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
+      initContainers:
+      - command:
+        - /telegraf/fetch_config.py
+        env:
+          - name: SNOWUSER
+            value: {{ .Values.collection.snowUser }}
+          - name: SNOWPASSWORD
+            valueFrom:
+              secretKeyRef:
+                key:  snowPassword
+                name: {{ .Release.Name }}-auth
+          - name: CONFIGS
+            value: {{ .Values.collection.configs }}
+          - name: LOCATION
+            value: {{ .Values.collection.location }}
+          - name: SN_URL
+            value: {{ .Values.collection.snUrl }}
+        image: "{{ .Values.initImage.name }}:{{ .Values.initImage.tag }}"
+        imagePullPolicy: Always
+        name: telegraf-init
+        volumeMounts:
+          - mountPath: /telegraf/conf.d
+            name: config-vol
+{{- with .Values.nodeSelector }}
+      nodeSelector:
+{{- toYaml . | nindent 8 }}
+{{- end }}
+{{- with .Values.affinity }}
+      affinity:
+{{- toYaml . | nindent 8 }}
+{{- end }}
+{{- with .Values.tolerations }}
+      tolerations:
+{{- toYaml . | nindent 8 }}
+{{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          image: template "artemis.image" .
+          image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           imagePullSecrets: {{ .Values.image.pullSecrets }}
-          initContainers:
-            - command:
-              - /telegraf/fetch_config.py
-              env:
-                - name: CONFIGS
-                  value: wlc
-                - name: LOCATION
-                  value: Rådhuset
-              image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag }}"
-              imagePullPolicy: Always
-              name: telegraf-snmp-init
-        volumeMounts:
-        - mountPath: /telegraf/conf.d
-          name: config-vol
-
+          env:
+            - name: DEBUG
+              value: {{ .Values.collection.debug | quote}}
+            - name: COMMUNITY
+              valueFrom:
+                secretKeyRef:
+                  key:  community
+                  name: {{ .Release.Name }}-auth
+            - name: MIDUSER
+              value: {{ .Values.collection.miduser }}
+            - name: MIDURL
+              value: {{ .Values.collection.midurl }}
+            - name: MIDPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key:  midpassword
+                  name: {{ .Release.Name }}-auth
+          volumeMounts:
+            - mountPath: /telegraf/conf.d
+              name: config-vol
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-    {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
-    {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+{{- toYaml .Values.resources | nindent 12 }}
       volumes:
       - emptyDir:
           sizeLimit: 1Mi

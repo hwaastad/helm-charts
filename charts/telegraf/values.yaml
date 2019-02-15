@@ -19,6 +19,18 @@ initImage:
 nameOverride: ""
 fullnameOverride: ""
 
+collection:
+  configs: wlc
+  location: Radhuset
+  community: public
+  midurl: http://mid-k8s:8097/api/mid/sa/metrics
+  miduser: username
+  midpassword: midpassword
+  snowUser: username
+  snowPassword: midpassword
+  debug: true
+  snUrl: https://dev65917.service-now.com
+
 service:
   type: ClusterIP
   port: 80

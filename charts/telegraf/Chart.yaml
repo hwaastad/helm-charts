@@ -3,3 +3,4 @@ appVersion: "1.0"
 description: A Helm chart for Telegraf SNOW collections
 name: telegraf
 version: 0.1.0
+icon: https://influxdata.github.io/branding/img/story/color-coded.png

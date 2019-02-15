@@ -1,0 +1,72 @@
+categories:
+- collections
+namespace: telegraf
+questions:
+- variable: defaultImage
+  default: true
+  description: "Use default Telegraf image"
+  label: Use Default Image
+  type: boolean
+  show_subquestion_if: false
+  group: "Container Images"
+  subquestions:
+  - variable: image.name
+    default: reg-proxy.daxdigital.net/devops/telegraf
+    description: "Default API Server image for OpenEBS"
+    type: string
+    label: API Server Image
+  - variable: image.tag
+    default: "latest"
+    description: "The image tag of Telegraf image"
+    type: string
+    label: Image Tag For Telegraf Image
+- variable: collection.configs
+  default: "wlc"
+  description: "Comma separated list of classes to collect (supported: wlc, switch)"
+  type: string
+  label: Config classes
+- variable: collection.community
+  default: "public"
+  description: "The image tag of Telegraf image"
+  type: password
+  label: SNMP Community
+- variable: collection.miduser
+  default: "mid"
+  description: "The MID api username"
+  type: string
+  label: MID api username
+- variable: collection.midpassword
+  default: "xxx"
+  description: "The password for the mid api user"
+  type: password
+  label: MID user password
+- variable: collection.midurl
+  default: "http://mid-k8s:8097/api/mid/sa/metrics"
+  description: "The MID metrics url"
+  type: string
+  label: MID metrics url
+- variable: collection.location
+  default: "Rådhuset"
+  description: "SNMP location to scrape"
+  type: string
+  label: SNMP location
+- variable: collection.snowUser
+  default: "snowuser"
+  description: "The SNOW api username"
+  type: string
+  label: SNOW api username
+- variable: collection.snowPassword
+  default: "snowpwd"
+  description: "The SNOW api username"
+  type: password
+  label: SNOW user password
+- variable: collection.snUrl
+  default: "https://dev65917.service-now.com"
+  description: "ServiceNow instance"
+  type: string
+  label: ServiceNow instance baseurl
+- variable: collection.debug
+  default: true
+  description: "Debug metrics collection"
+  type: boolean
+  label: Debug
