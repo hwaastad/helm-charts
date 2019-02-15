@@ -30,29 +30,29 @@ questions:
     default: 'Oslo'
     description: "SNMP location to fetch"
     type: string
-    label: Fetch classes
+    label: SNMP Location
     group: "Environment Variables"
 - variable: extraEnv.COMMUNITY
     default: 'public'
     description: "SNMP v2c community"
     type: string
-    label: Fetch classes
+    label: SNMP Community
     group: "Environment Variables"
 - variable: extraEnv.MIDURL
     default: 'http://whatever'
     description: "The MID server metrics url"
     type: string
-    label: Fetch classes
+    label: MID url
     group: "Environment Variables"
 - variable: extraEnv.MIDUSER
     default: 'miduser'
     description: "The MID username"
     type: string
-    label: Fetch classes
+    label: MID username
     group: "Environment Variables"
 - variable: extraEnv.MIDPASSWORD
     default: 'midpassword'
     description: "The MID user password"
     type: string
-    label: Fetch classes
+    label: MID password
     group: "Environment Variables"
