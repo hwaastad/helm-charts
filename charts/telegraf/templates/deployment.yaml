@@ -24,7 +24,7 @@ spec:
         - /telegraf/fetch_config.py
         env:
           - name: SNOWUSER
-            value: {{ .Values.collection.miduser }}
+            value: {{ .Values.collection.snowUser }}
           - name: SNOWPASSWORD
             valueFrom:
               secretKeyRef:
