@@ -26,8 +26,3 @@ questions:
     type: string
     label: Fetch classes
     group: "Environment Variables"
-- variable: extraEnv.LOCATION
-    default: 'Oslo'
-    description: "SNMP location to fetch"
-    type: string
-    label: SNMP Location
