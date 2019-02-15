@@ -50,11 +50,6 @@ questions:
   description: "SNMP location to scrape"
   type: string
   label: SNMP location
-- variable: collection.snUrl
-  default: "https://dev65917.service-now.com"
-  description: "ServiceNow instance"
-  type: string
-  label: ServiceNow instance baseurl
 - variable: collection.snowUser
   default: "snowuser"
   description: "The SNOW api username"
@@ -65,6 +60,11 @@ questions:
   description: "The SNOW api username"
   type: password
   label: SNOW user password
+- variable: collection.snUrl
+  default: "https://dev65917.service-now.com"
+  description: "ServiceNow instance"
+  type: string
+  label: ServiceNow instance baseurl
 - variable: collection.debug
   default: true
   description: "Debug metrics collection"
