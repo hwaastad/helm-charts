@@ -37,9 +37,9 @@ questions:
   label: MID user password
 - variable: collection.miduser
   default: "mid"
-  description: "The MID api user"
+  description: "The MID api username"
   type: string
-  label: MID user password
+  label: MID api username
 - variable: collection.midurl
   default: "http://mid-k8s:8097/api/mid/sa/metrics"
   description: "The MID metrics url"
