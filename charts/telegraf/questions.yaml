@@ -60,3 +60,13 @@ questions:
   description: "ServiceNow instance"
   type: string
   label: ServiceNow instance baseurl
+- variable: collection.snowPassword
+  default: "snowpwd"
+  description: "The SNOW api username"
+  type: password
+  label: SNOW user password
+- variable: collection.snowUser
+  default: "snowuser"
+  description: "The SNOW api username"
+  type: string
+  label: SNOW api username
