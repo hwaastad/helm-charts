@@ -19,13 +19,13 @@ initImage:
 nameOverride: ""
 fullnameOverride: ""
 
-extraEnv:
+collection:
   configs: wlc
   location: Radhuset
-  COMMUNITY: public
-  MIDURL: http://mid-k8s:8097/api/mid/sa/metrics
-  MIDUSER: username
-  MIDPASSWORD: midpassword
+  community: public
+  midurl: http://mid-k8s:8097/api/mid/sa/metrics
+  miduser: username
+  midpassword: midpassword
 
 service:
   type: ClusterIP

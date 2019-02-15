@@ -51,10 +51,15 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           imagePullSecrets: {{ .Values.image.pullSecrets }}
           env:
-            {{- range $key, $value := .Values.extraEnv }}
-            - name: {{ $key }}
-              value: {{ $value }}
-            {{- end }}
+            - name: MIDUSER
+              value: {{ .Values.collection.miduser }}
+            - name: MIDURL
+              value: {{ .Values.collection.midurl }}
+            - name: MIDPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key:  miduser
+                  name: {{ .Release.Name }}-auth
           volumeMounts:
             - mountPath: /telegraf/conf.d
               name: config-vol
