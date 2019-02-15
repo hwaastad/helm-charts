@@ -25,7 +25,7 @@ extraEnv:
   COMMUNITY: public
   MIDURL: http://mid-k8s:8097/api/mid/sa/metrics
   MIDUSER: username
-  MIDPASSWORD: midpassword  
+  MIDPASSWORD: midpassword
 
 service:
   type: ClusterIP
