@@ -57,7 +57,7 @@ spec:
           imagePullSecrets: {{ .Values.image.pullSecrets }}
           env:
             - name: DEBUG
-              value: {{ .Values.collection.debug }}
+              value: {{ .Values.collection.debug | quote}}
             - name: MIDUSER
               value: {{ .Values.collection.miduser }}
             - name: MIDURL
