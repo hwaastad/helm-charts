@@ -56,3 +56,4 @@ questions:
     type: string
     label: MID password
     group: "Environment Variables"
+    
