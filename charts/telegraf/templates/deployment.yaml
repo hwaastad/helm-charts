@@ -19,6 +19,31 @@ spec:
         app.kubernetes.io/name: {{ include "telegraf.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
+      initContainers:
+      - command:
+        - /telegraf/fetch_config.py
+        env:
+          - name: CONFIGS
+            value: wlc
+          - name: LOCATION
+            value: Rådhuset
+        image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag }}"
+        imagePullPolicy: Always
+        name: telegraf-snmp-init
+        volumeMounts:
+          - mountPath: /telegraf/conf.d
+            name: config-vol
+      nodeSelector:
+{{- toYaml . | nindent 8 }}
+{{- end }}
+{{- with .Values.affinity }}
+      affinity:
+{{- toYaml . | nindent 8 }}
+{{- end }}
+{{- with .Values.tolerations }}
+      tolerations:
+{{- toYaml . | nindent 8 }}
+{{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
@@ -28,33 +53,8 @@ spec:
             - mountPath: /telegraf/conf.d
               name: config-vol
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-          initContainers:
-          - command:
-            - /telegraf/fetch_config.py
-            env:
-              - name: CONFIGS
-                value: wlc
-              - name: LOCATION
-                value: Rådhuset
-            image: "{{ .Values.initImage.repository }}:{{ .Values.initImage.tag }}"
-            imagePullPolicy: Always
-            name: telegraf-snmp-init
-            volumeMounts:
-              - mountPath: /telegraf/conf.d
-                name: config-vol
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-    {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
-    {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+{{- toYaml .Values.resources | nindent 12 }}
+{{- with .Values.nodeSelector }}
       volumes:
       - emptyDir:
           sizeLimit: 1Mi
