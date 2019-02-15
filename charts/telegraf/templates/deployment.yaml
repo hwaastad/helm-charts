@@ -63,7 +63,7 @@ spec:
             - name: MIDPASSWORD
               valueFrom:
                 secretKeyRef:
-                  key:  miduser
+                  key:  midpassword
                   name: {{ .Release.Name }}-auth
           volumeMounts:
             - mountPath: /telegraf/conf.d
