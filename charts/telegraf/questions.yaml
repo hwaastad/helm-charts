@@ -1,0 +1,21 @@
+categories:
+- collections
+namespace: telegraf
+questions:
+- variable: defaultImage
+  default: true
+  description: "Use default Telegraf image"
+  label: Use Default Image
+  type: boolean
+  show_subquestion_if: false
+  subquestions:
+  - variable: image.name
+    default: reg-proxy.daxdigital.net/devops/telegraf
+    description: "Default API Server image for OpenEBS"
+    type: string
+    label: API Server Image
+  - variable: image.tag
+    default: "latest"
+    description: "The image tag of Telegraf image"
+    type: string
+    label: Image Tag For Telegraf Image

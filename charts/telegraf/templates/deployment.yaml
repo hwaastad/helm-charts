@@ -23,13 +23,13 @@ spec:
       - command:
         - /telegraf/fetch_config.py
         env:
-          - name: CONFIGS
-            value: wlc
-          - name: LOCATION
-            value: Rådhuset
+            {{- range $key, $value := .Values.extraEnv }}
+            - name: {{ $key }}
+              value: {{ $value }}
+            {{- end }}
         image: "{{ .Values.initImage.name }}:{{ .Values.initImage.tag }}"
         imagePullPolicy: Always
-        name: telegraf-snmp-init
+        name: telegraf-init
         volumeMounts:
           - mountPath: /telegraf/conf.d
             name: config-vol
@@ -50,6 +50,11 @@ spec:
           image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           imagePullSecrets: {{ .Values.image.pullSecrets }}
+          env:
+            {{- range $key, $value := .Values.extraEnv }}
+            - name: {{ $key }}
+              value: {{ $value }}
+            {{- end }}
           volumeMounts:
             - mountPath: /telegraf/conf.d
               name: config-vol

@@ -19,6 +19,14 @@ initImage:
 nameOverride: ""
 fullnameOverride: ""
 
+extraEnv:
+  CONFIGS: wlc
+  LOCATION: Rådhuset
+  COMMUNITY: public
+  MIDURL: http://mid-k8s:8097/api/mid/sa/metrics
+  MIDUSER: username
+  MIDPASSWORD: midpassword  
+
 service:
   type: ClusterIP
   port: 80
