@@ -21,7 +21,7 @@ fullnameOverride: ""
 
 extraEnv:
   configs: wlc
-  location: Rådhuset
+  location: Radhuset
   COMMUNITY: public
   MIDURL: http://mid-k8s:8097/api/mid/sa/metrics
   MIDUSER: username
