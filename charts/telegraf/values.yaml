@@ -20,8 +20,8 @@ nameOverride: ""
 fullnameOverride: ""
 
 extraEnv:
-  CONFIGS: wlc
-  LOCATION: Rådhuset
+  configs: wlc
+  location: Rådhuset
   COMMUNITY: public
   MIDURL: http://mid-k8s:8097/api/mid/sa/metrics
   MIDUSER: username
