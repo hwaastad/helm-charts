@@ -55,3 +55,8 @@ questions:
   description: "Debug metrics collection"
   type: boolean
   label: Debug
+- variable: collection.snUrl
+  default: "https://dev65917.service-now.com"
+  description: "ServiceNow instance"
+  type: string
+  label: ServiceNow instance baseurl

@@ -23,15 +23,19 @@ spec:
       - command:
         - /telegraf/fetch_config.py
         env:
+          - name: SNOWUSER
+            value: {{ .Values.collection.miduser }}
+          - name: SNOWPASSWORD
+            valueFrom:
+              secretKeyRef:
+                key:  snowPassword
+                name: {{ .Release.Name }}-auth
           - name: CONFIGS
             value: {{ .Values.collection.configs }}
           - name: LOCATION
             value: {{ .Values.collection.location }}
-          - name: COMMUNITY
-            valueFrom:
-              secretKeyRef:
-                key:  community
-                name: {{ .Release.Name }}-auth
+          - name: SN_URL
+            value: {{ .Values.collection.snUrl }}
         image: "{{ .Values.initImage.name }}:{{ .Values.initImage.tag }}"
         imagePullPolicy: Always
         name: telegraf-init
@@ -58,6 +62,11 @@ spec:
           env:
             - name: DEBUG
               value: {{ .Values.collection.debug | quote}}
+            - name: COMMUNITY
+              valueFrom:
+                secretKeyRef:
+                  key:  community
+                  name: {{ .Release.Name }}-auth
             - name: MIDUSER
               value: {{ .Values.collection.miduser }}
             - name: MIDURL
