@@ -19,3 +19,8 @@ questions:
     description: "The image tag of Telegraf image"
     type: string
     label: Image Tag For Telegraf Image
+- variable: extraEnv.CONFIGS
+    default: "wlc"
+    description: "Classes to fetch. Supported switch and wlc"
+    type: string
+    label: Fetch classes
