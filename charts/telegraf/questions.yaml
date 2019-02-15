@@ -8,6 +8,7 @@ questions:
   label: Use Default Image
   type: boolean
   show_subquestion_if: false
+  group: "Container Images"
   subquestions:
   - variable: image.name
     default: reg-proxy.daxdigital.net/devops/telegraf
@@ -20,7 +21,8 @@ questions:
     type: string
     label: Image Tag For Telegraf Image
 - variable: extraEnv.CONFIGS
-    default: "wlc"
+    default: 'wlc'
     description: "Classes to fetch. Supported switch and wlc"
     type: string
     label: Fetch classes
+    group: "Environment Vsriables"
