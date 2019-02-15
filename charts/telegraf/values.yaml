@@ -26,6 +26,7 @@ collection:
   midurl: http://mid-k8s:8097/api/mid/sa/metrics
   miduser: username
   midpassword: midpassword
+  debug: true
 
 service:
   type: ClusterIP

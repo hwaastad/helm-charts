@@ -50,3 +50,8 @@ questions:
   description: "SNMP location to scrape"
   type: string
   label: SNMP location
+- variable: collection.debug
+  default: true
+  description: "Debug metrics collection"
+  type: boolean
+  label: Debug
