@@ -23,10 +23,15 @@ spec:
       - command:
         - /telegraf/fetch_config.py
         env:
-            {{- range $key, $value := .Values.extraEnv }}
-            - name: {{ $key }}
-              value: {{ $value }}
-            {{- end }}
+          - name: CONFIGS
+            value: {{ .Values.collection.configs }}
+          - name: LOCATION
+            value: {{ .Values.collection.location }}
+          - name: COMMUNITY
+            valueFrom:
+              secretKeyRef:
+                key:  community
+                name: {{ .Release.Name }}-auth
         image: "{{ .Values.initImage.name }}:{{ .Values.initImage.tag }}"
         imagePullPolicy: Always
         name: telegraf-init
