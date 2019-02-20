@@ -1,6 +1,5 @@
 categories:
 - collections
-namespace: telegraf
 questions:
 - variable: defaultImage
   default: true
