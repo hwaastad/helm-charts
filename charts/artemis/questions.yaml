@@ -25,7 +25,7 @@ questions:
   type: boolean
   label: Secure
   group: "SSL Configuration"
-  show_subquestion_if: false
+  show_subquestion_if: true
   subquestions:
   - variable: security.trustStorePassword
     default: "xxx"
@@ -43,7 +43,7 @@ questions:
   type: boolean
   label: Persistence
   group: "Persistence"
-  show_subquestion_if: false
+  show_subquestion_if: true
   subquestions:
   - variable: persistence.size
     default: "1Gi"
