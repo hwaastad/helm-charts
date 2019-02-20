@@ -37,3 +37,20 @@ questions:
     description: "The Keystore Password"
     type: password
     label: Keystore Password
+- variable: persistence.enabled
+  default: false
+  description: "Enable persistence"
+  type: boolean
+  label: Persistence
+  group: "Persistence"
+  show_subquestion_if: false
+  - variable: persistence.size
+    default: "1Gi"
+    description: "Persistence storage size"
+    type: string
+    label: Storage size
+  - variable: persistence.storageClass
+    default: "longhorn"
+    description: "Persistence storageclass"
+    type: string
+    label: Storageclass
