@@ -1,19 +1,27 @@
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    # Make sure DNS is resolvable during initialization.
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
   name: {{ include "artemis.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "artemis.name" . }}
-    helm.sh/chart: {{ include "artemis.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{ include "artemis.labels.standard" . | indent 4 }}
 spec:
-  type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+  - name: http
+    port: 8161
+    targetPort: http
+  - name: core
+    port: 61616
+    targetPort: core
+  - name: amqp
+    port: 5672
+    targetPort: amqp
+  - name: jmx
+    port: 9494
+    targetPort: jmxexporter
+  clusterIP: None
   selector:
-    app.kubernetes.io/name: {{ include "artemis.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    app: {{ template "artemis.name" . }}
+    release: {{ .Release.Name | quote }}

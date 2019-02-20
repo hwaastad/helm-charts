@@ -1,48 +1,80 @@
-# Default values for artemis.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
-replicaCount: 1
-
 image:
-  repository: nginx
-  tag: stable
-  pullPolicy: IfNotPresent
+  # image.registry is the repository where the ActiveMQ Artemis image is stored
+  registry: reg-proxy.daxdigital.net
+  # image.repository is the ActiveMQ Artemis image name
+  repository: server/apache-artemis
+  # image.tag is the ActiveMQ Artemis image's tag: https://hub.docker.com/r/vromero/activemq-artemis/tags
+  tag: 2.6.4-k8s
+  # image.pullPolicy is the ActiveMQ Artemis image's pull policy
+  pullPolicy: Always
+  # image.pullSecrets optionally specify an array of imagePullSecrets.Secrets must be manually created in the namespace.
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  pullSecrets: []
 
-nameOverride: ""
-fullnameOverride: ""
+# artemisUser sets the artemis admin user name
+artemisUser: artemis
+# artemisPassword sets the artemis admin user password
+artemisPassword: simetraehcapa
 
-service:
-  type: ClusterIP
-  port: 80
+replicas: 2
 
-ingress:
-  enabled: false
+# antiAffinity sets an anti affinity policy between masters and slaves as either hard or soft, default is hard
+antiAffinity: "soft"
+
+# nameOverride replaces the computed chart name with this given name.
+# nameOverride:
+
+# namePrefix sets the prefix for the fullname in the template "global prefix + prefix + name + suffix + global suffix"
+# namePrefix:
+
+# nameSuffix sets the suffix for the fullname in the template "global prefix + prefix + name + suffix + global suffix"
+# nameSuffix:
+
+global:
+# namePrefix sets the global prefix for the fullname in the template "global prefix + prefix + name + suffix + global suffix"
+#   namePrefix: Global prefix
+# nameSuffix sets the global suffix for the fullname in the template "global prefix + prefix + name + suffix + global suffix"
+#   nameSuffix: Global suffix
+
+deployment:
+  ## Artemis Deployment annotations
   annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  paths: []
-  hosts:
-    - chart-example.local
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  #   name: value
+replica:
+  ## Artemis Replicas annotations
+  annotations: {}
+  ## Read more about kube2iam to provide access to s3 https://github.com/jtblin/kube2iam
+  #   iam.amazonaws.com/role: role-arn
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #  cpu: 100m
-  #  memory: 128Mi
-  # requests:
-  #  cpu: 100m
-  #  memory: 128Mi
+## Persist data to a persitent volume
+persistence:
+  testJournalPerformance: AUTO
+  enabled: true
+  ## If defined, storageClassName: <storageClass>
+  ## Default: not set
+  ##
+  ## storageClass:
+  accessMode: ReadWriteOnce
+  size: 8Gi
 
-nodeSelector: {}
+## Configure resource requests and limits
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+##
+resources:
+  requests:
+    memory: 256Mi
+    cpu: 100m
 
-tolerations: []
+## Disable built-in security
+## ref: https://activemq.apache.org/artemis/docs/latest/security.html
+security:
+  enabled: false
+  trustStorePassword: xxx
+  keyStorePassword: xxx
 
-affinity: {}
+
+# A load balander might confuse Minikube when installing with Helm and --wait
+# Probably this is only useful for minikube environments and CI
+loadbalancer:
+  enabled: true
+  createInternalOpenStackLoadBalancer: true

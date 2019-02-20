@@ -30,6 +30,7 @@ collection:
   snowPassword: midpassword
   debug: true
   snUrl: https://dev65917.service-now.com
+  interval: "60s"
 
 service:
   type: ClusterIP

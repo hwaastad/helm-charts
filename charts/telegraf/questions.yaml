@@ -70,3 +70,8 @@ questions:
   description: "Debug metrics collection"
   type: boolean
   label: Debug
+- variable: collection.interval
+  default: "60s"
+  description: "Collection Interval"
+  type: string
+  label: Collection Interval

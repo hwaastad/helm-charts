@@ -60,6 +60,8 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           imagePullSecrets: {{ .Values.image.pullSecrets }}
           env:
+            - name: INTERVAL
+              value: {{ .Values.collection.interval }}
             - name: DEBUG
               value: {{ .Values.collection.debug | quote}}
             - name: COMMUNITY
