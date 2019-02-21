@@ -72,3 +72,15 @@ questions:
   description: "Number of replicas"
   type: int
   label: replicas
+- variable: artemisUser
+  default: "artemis"
+  description: "Artemis User"
+  type: string
+  label: Artemis User
+  group: "User Definition"
+- variable: artemisPassword
+  default: "artemis"
+  description: "Artemis User Password"
+  type: password
+  label: Artemis User Password
+  group: "User Definition"
