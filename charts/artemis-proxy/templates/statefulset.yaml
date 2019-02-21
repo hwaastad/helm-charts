@@ -67,6 +67,13 @@ spec:
               key: truststore-password
         - name: SECURE
           value: {{ .Values.security.enabled | quote }}
+        - name: ARTEMIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "artemis-proxy.fullname" . }}
+              key: artemis-password
+        - name: ARTEMIS_USERNAME
+          value: {{ default "artemis" .Values.artemisUser | quote }}
       containers:
       - name: {{ include "artemis-proxy.fullname" . }}
         image: {{ template "artemis-proxy.image" . }}
