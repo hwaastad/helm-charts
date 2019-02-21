@@ -115,6 +115,10 @@ data:
     xmlstarlet ed -L -N core="urn:activemq:core" -u "//core:name" -v "${HOSTNAME}" \
       /var/lib/artemis/etc-override/broker-10.xml
 
+    echo setting user credentials on bridges
+    xmlstarlet ed --inplace -N core="urn:activemq:core" -u "//core:bridges/core:bridge/core:password" -v "${ARTEMIS_PASSWORD}" /var/lib/artemis/etc-override/broker-10.xml
+    xmlstarlet ed --inplace -N core="urn:activemq:core" -u "//core:bridges/core:bridge/core:user" -v "${ARTEMIS_USERNAME}" /var/lib/artemis/etc-override/broker-10.xml
+
     if [ "$SECURE" = true ]; then
       echo "Setting ssl specific configuration..."
       url=$(xmlstarlet sel -N core="urn:activemq:core" -t -v "//core:connectors/core:connector[@name='artemis-connector']" /var/lib/artemis/etc-override/broker-10.xml)
