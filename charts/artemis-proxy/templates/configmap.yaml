@@ -16,7 +16,6 @@ data:
         {{- $fullname := include "artemis-proxy.fullname" . -}}
         {{- $releaseName := printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
         {{- $releaseNamespace := .Release.Namespace -}}
-        {{- $connectorName :=  -}}
         <acceptors>
           <acceptor name="artemis">tcp://0.0.0.0:61616?tcpSendBufferSize=1048576;tcpReceiveBufferSize=1048576;protocols=CORE,AMQP,STOMP,HORNETQ,MQTT,OPENWIRE;useEpoll=true;amqpCredits=1000;amqpLowCredits=300</acceptor>
         </acceptors>
