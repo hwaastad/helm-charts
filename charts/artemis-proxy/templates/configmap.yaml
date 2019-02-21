@@ -58,7 +58,7 @@ data:
           </bridge>
         </bridges>
         <connectors>
-          <connector name="artemis-connector">tcp://{{ .Values.cluster.url}}</connector>
+          <connector name="artemis-connector">tcp://{{ .Values.cluster.url }}</connector>
         </connectors>
        <addresses>
         <address name="DLQ">
@@ -117,7 +117,7 @@ data:
 
     if [ "$SECURE" = true ]; then
       echo "Setting ssl specific configuration..."
-      url=$(xmlstarlet sel -N core="urn:activemq:core" -t -v "//core:connectors/core:connector[@name='$i']" /var/lib/artemis/etc-override/broker-10.xml)
+      url=$(xmlstarlet sel -N core="urn:activemq:core" -t -v "//core:connectors/core:connector[@name='artemis-connector']" /var/lib/artemis/etc-override/broker-10.xml)
       xmlstarlet ed --inplace -N core="urn:activemq:core" \
         -u "//core:connectors/core:connector[@name='artemis-connector']" \
         -v "$url?sslEnabled=true;trustStorePassword=${TRUSTSTORE_PASSWORD};trustStorePath=client.ts;" /var/lib/artemis/etc-override/broker-10.xml
