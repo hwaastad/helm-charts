@@ -79,7 +79,7 @@ questions:
   label: Artemis User
   group: "User Definition"
 - variable: artemisPassword
-  default: "artemis"
+  default: "simetraehcapa"
   description: "Artemis User Password"
   type: password
   label: Artemis User Password
