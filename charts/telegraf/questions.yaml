@@ -11,7 +11,7 @@ questions:
   subquestions:
   - variable: image.name
     default: reg-proxy.daxdigital.net/devops/telegraf
-    description: "Default API Server image for OpenEBS"
+    description: "Default API Server image for Telegraf"
     type: string
     label: API Server Image
   - variable: image.tag
