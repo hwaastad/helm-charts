@@ -58,7 +58,7 @@ data:
           </bridge>
         </bridges>
         <connectors>
-          <connector name="artemis-connector">tcp://{{ .Values.cluster.url }}</connector>
+          <connector name="artemis-connector">{{ .Values.cluster.url }}</connector>
         </connectors>
        <addresses>
         <address name="DLQ">
