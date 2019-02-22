@@ -26,10 +26,20 @@ questions:
   label: Cluster Name
   group: "Cluster Specification"
 - variable: cluster.replicas
-  default: 1
-  description: "The cluster name"
+  default: 3
+  description: "The cluster replicas"
   type: int
   label: Replicas
+  group: "Cluster Specification"
+- variable: cluster.minimumMasterNodes
+  default: 2
+  type: int
+  label: Minimum Master Nodes
+  group: "Cluster Specification"
+- variable: cluster.recoverAfterNodes
+  default: 1
+  type: int
+  label: Recover after Nodes
   group: "Cluster Specification"
 - variable: resources.requests.memory
   default: "1Gi"
