@@ -67,3 +67,5 @@ persistentVolume:
     - ReadWriteOnce
   size: 10Gi  # Per instance
   annotations: {}
+
+podAntiAffinity: soft
