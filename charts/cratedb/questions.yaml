@@ -1,0 +1,63 @@
+categories:
+- database
+questions:
+- variable: defaultImage
+  default: true
+  description: "Use default cratedb image"
+  label: Use Default Image
+  type: boolean
+  show_subquestion_if: false
+  group: "Container Images"
+  subquestions:
+  - variable: image.name
+    default: crate
+    description: "Default image for CrateDB"
+    type: string
+    label: CrateDB Server Image
+  - variable: image.tag
+    default: "3.2"
+    description: "The image tag of CrateDB image"
+    type: string
+    label: Image Tag For CrateDB Image
+- variable: cluster.clusterName
+  default: "my-cluster"
+  description: "The cluster name"
+  type: string
+  label: Cluster Name
+  group: "Cluster Specification"
+- variable: cluster.replicas
+  default: 1
+  description: "The cluster name"
+  type: int
+  label: Replicas
+  group: "Cluster Specification"
+- variable: resources.requests.memory
+  default: "1Gi"
+  description: "Memory Requested"
+  type: string
+  label: Memory
+  group: "Resources"
+- variable: resources.requests.limit
+  default: "2Gi"
+  description: "Memory Limit"
+  type: string
+  label: Memory Limit
+  group: "Resources"
+- variable: persistentVolume.enabled
+  default: false
+  type: boolean
+  description: "Enable Persistent storageclass"
+  label: Persistent storage
+  group: Storage
+  show_subquestion_if: true
+  subquestions:
+  - variable: persistentVolume.storageClass
+    default: "longhorn-one-replica"
+    description: "Storageclass"
+    type: string
+    label: Storageclass
+  - variable: persistentVolume.size
+    default: "10Gi"
+    description: "Disk size"
+    type: string
+    label: Disk size
