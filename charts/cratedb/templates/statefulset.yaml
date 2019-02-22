@@ -72,8 +72,8 @@ spec:
           periodSeconds: 60
         {{- if eq .Values.podAntiAffinity "hard" }}
         affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
             - topologyKey: "kubernetes.io/hostname"
               labelSelector:
                 matchLabels:
@@ -81,8 +81,8 @@ spec:
                   release: {{ .Release.Name }}
       {{- else if eq .Values.podAntiAffinity "soft" }}
         affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
             - weight: 1
               podAffinityTerm:
                 topologyKey: kubernetes.io/hostname
