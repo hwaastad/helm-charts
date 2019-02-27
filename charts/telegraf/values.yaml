@@ -7,13 +7,13 @@ replicaCount: 1
 image:
   name: reg-proxy.daxdigital.net/devops/telegraf
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   pullSecrets: []
 
 initImage:
   name: reg-proxy.daxdigital.net/devops/telegraf-config
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   pullSecrets: []
 
 nameOverride: ""
