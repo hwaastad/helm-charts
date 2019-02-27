@@ -42,8 +42,6 @@ spec:
         volumeMounts:
           - mountPath: /telegraf/conf.d
             name: config-vol
-          - mountPath: /telegraf/
-            name: telegraf-vol
 {{- with .Values.nodeSelector }}
       nodeSelector:
 {{- toYaml . | nindent 8 }}
@@ -61,6 +59,7 @@ spec:
           image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           imagePullSecrets: {{ .Values.image.pullSecrets }}
+          args: ["./telegraf", "--config", "./custom/snmp.conf", "--config-directory", "./conf.d"]
           env:
             - name: INTERVAL
               value: {{ .Values.collection.interval }}
@@ -83,7 +82,7 @@ spec:
           volumeMounts:
             - mountPath: /telegraf/conf.d
               name: config-vol
-            - mountPath: /telegraf/
+            - mountPath: /telegraf/config
               name: telegraf-vol
           resources:
 {{- toYaml .Values.resources | nindent 12 }}
