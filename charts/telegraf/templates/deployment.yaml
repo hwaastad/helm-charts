@@ -42,6 +42,8 @@ spec:
         volumeMounts:
           - mountPath: /telegraf/conf.d
             name: config-vol
+          - mountPath: /telegraf/
+            name: telegraf-vol
 {{- with .Values.nodeSelector }}
       nodeSelector:
 {{- toYaml . | nindent 8 }}
