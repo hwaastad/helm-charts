@@ -81,9 +81,16 @@ spec:
           volumeMounts:
             - mountPath: /telegraf/conf.d
               name: config-vol
+            - mountPath: /telegraf/
+              name: telegraf-vol
           resources:
 {{- toYaml .Values.resources | nindent 12 }}
       volumes:
       - emptyDir:
           sizeLimit: 1Mi
         name: config-vol
+      - configMap:
+          defaultMode: 256
+          name: {{ include "telegraf.name" . }}
+          optional: false
+        name: telegraf-vol
