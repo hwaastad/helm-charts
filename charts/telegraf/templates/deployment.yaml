@@ -1,6 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    reloader.stakater.com/auto: "true"
   name: {{ include "telegraf.fullname" . }}
   labels:
     app.kubernetes.io/name: {{ include "telegraf.name" . }}
