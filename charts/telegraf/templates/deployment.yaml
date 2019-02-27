@@ -59,7 +59,7 @@ spec:
           image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           imagePullSecrets: {{ .Values.image.pullSecrets }}
-          args: ["./telegraf", "--config", "./custom/snmp.conf", "--config-directory", "./conf.d"]
+          args: ["./telegraf", "--config", "./config/snmp.conf", "--config-directory", "./conf.d"]
           env:
             - name: INTERVAL
               value: {{ .Values.collection.interval }}
