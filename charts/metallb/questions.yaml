@@ -1,0 +1,89 @@
+categories:
+- loadbalancer
+questions:
+- variable: layer2.enabled
+  description: "Layer2 Load Balancing"
+  label: Layer 2 enabled
+  type: boolean
+  group: "LoadBalancing Strategy"
+  show_subquestion_if: true
+  subquestions:
+    - variable: layer2.addresses
+      default: "192.168.1.240-192.168.1.250"
+      description: "Loadbalancing IP range"
+      type: string
+      label: IP Addresses
+- variable: defaultImage
+  default: true
+  description: "Use default metallb image"
+  label: Use Default Image
+  type: boolean
+  show_subquestion_if: false
+  group: "Container Images"
+  subquestions:
+  - variable: controller.image.repository
+    default: metallb/controller
+    description: "Default image for Metallb controller"
+    type: string
+    label: Metallb Controller Image
+  - variable: controller.image.tag
+    default: "v0.7.3"
+    description: "The image tag of Metallb image"
+    type: string
+    label: Image Tag For Metallb speaker Image
+  - variable: speaker.image.repository
+    default: metallb/speaker
+    description: "Default image for Metallb speaker"
+    type: string
+    label: Metallb Speaker Image
+  - variable: speaker.image.tag
+    default: "v0.7.3"
+    description: "The image tag of Metallb Speaker image"
+    type: string
+    label: Image Tag For Metallb Speaker Image
+- variable: prometheus.scrapeAnnotations
+  default: false
+  type: boolean
+  label: Enable Metric collection
+  group: "Metrics"
+  description: "Enable Prometheus metrics scrape annotations"
+- variable: controller.affinity.enabled
+  group: "Affinity"
+  type: boolean
+  default: false
+  label: Enable Controller Affinity
+  description: Enable Controller Affinity rules
+  show_subquestion_if: true
+  subquestions:
+  - variable: controller.affinity.label
+    type: string
+    default: loadbalancer
+    description: Label to use for controller affinity
+    label: Controller required Node label
+    required: true
+  - variable: controller.affinity.value
+    type: string
+    default: "true"
+    description: Label value to use for affinity
+    label: Cotroller required Node label value
+    required: true
+- variable: speaker.affinity.enabled
+  group: "Affinity"
+  type: boolean
+  default: false
+  label: Enable Speaker Affinity
+  description: Enable Speaker Affinity rules
+  show_subquestion_if: true
+  subquestions:
+  - variable: speaker.affinity.label
+    type: string
+    default: loadbalancer
+    description: Label to use for speaker affinity
+    label: Speaker Required Node label
+    required: true
+  - variable: speaker.affinity.value
+    type: string
+    default: "true"
+    description: Label value to use for speaker affinity
+    label: Speaker required Node label value
+    required: true

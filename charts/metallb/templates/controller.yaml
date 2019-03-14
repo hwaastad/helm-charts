@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "metallb.fullname" . }}-controller
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "metallb.chart" . }}
+    app: {{ template "metallb.name" . }}
+    component: controller
+spec:
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: {{ template "metallb.name" . }}
+      component: controller
+      release: {{ .Release.Name | quote }}
+  template:
+    metadata:
+      labels:
+        heritage: {{ .Release.Service | quote }}
+        release: {{ .Release.Name | quote }}
+        chart: {{ template "metallb.chart" . }}
+        app: {{ template "metallb.name" . }}
+        component: controller
+{{- if .Values.prometheus.scrapeAnnotations }}
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "7472"
+{{- end }}
+    spec:
+      serviceAccountName: {{ template "metallb.controllerServiceAccountName" . }}
+      terminationGracePeriodSeconds: 0
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534 # nobody
+    {{- if .Values.controller.affinity.enabled }}
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: {{ .Values.controller.affinity.label | quote }}
+                operator: In
+                values:
+                - {{ .Values.controller.affinity.value | quote }}
+    {{- end }}
+      containers:
+      - name: controller
+        image: {{ .Values.controller.image.repository }}:{{ .Values.controller.image.tag }}
+        imagePullPolicy: {{ .Values.controller.image.pullPolicy }}
+        args:
+        - --port=7472
+        - --config={{ template "metallb.configMapName" . }}
+        ports:
+        - name: monitoring
+          containerPort: 7472
+        resources:
+{{ toYaml .Values.controller.resources | indent 10 }}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true

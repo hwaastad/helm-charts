@@ -1,0 +1,18 @@
+{{- if .Values.layer2.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "metallb.fullname" . }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "metallb.chart" . }}
+    app: {{ template "metallb.name" . }}
+data:
+  config: |
+         address-pools:
+         - name: default
+           protocol: layer2
+           addresses:
+           - {{ .Values.layer2.addresses }}
+{{- end }}
