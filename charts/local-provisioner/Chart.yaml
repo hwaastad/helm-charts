@@ -1,7 +1,7 @@
 apiVersion: v1
 version: 2.3.0
 description: local provisioner chart
-name: provisioner
+name: local-provisioner
 keywords:
   - storage
   - local

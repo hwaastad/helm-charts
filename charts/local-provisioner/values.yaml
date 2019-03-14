@@ -9,7 +9,7 @@ common:
   #
   # Defines the namespace where provisioner runs
   #
-  namespace: provisioner
+  namespace: local-provisioner
   #
   # Defines whether to create provisioner namespace
   #
