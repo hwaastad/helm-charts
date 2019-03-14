@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "mid-server.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "mid-server.name" . }}
+    helm.sh/chart: {{ include "mid-server.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "mid-server.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "mid-server.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        imagePullSecrets:
+        - name:  {{ .Values.image.pullSecrets }}
+        volumeMounts:
+        - mountPath: /agent/work
+          name: work-vol
+        env:
+        - name: SN_PASSWD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "mid-server.fullname" . }}
+              key: servicenow-password
+        - name: SN_URL
+          value: {{ .Values.servicenow.url | quote }}
+        - name: SN_USER
+          value: {{ .Values.servicenow.username | quote }}
+        - name: SN_MID_NAME
+          value: {{ .Values.servicenow.name | quote }}
+        resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      volumes:
+      - name: work-vol
+      {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingClaim | default (include "mid-server.fullname" .) }}
+      {{- else }}
+        emptyDir: {}
+      {{- end -}}

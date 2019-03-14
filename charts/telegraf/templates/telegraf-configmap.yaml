@@ -32,7 +32,7 @@ data:
         #[[outputs.file]]
         #  files = ["stdout"]
         #  data_format = "json"
-        [[inputs.internal]]
+        # [[inputs.internal]]
 
         [[outputs.http]]
           ## URL is the address to send metrics to
@@ -52,4 +52,3 @@ data:
             [outputs.http.headers]
               Content-Type = "application/json"
               Accept = "application/json"
-              

@@ -1,0 +1,46 @@
+categories:
+- servicenow
+questions:
+- variable: persistence.enabled
+  description: "Layer2 Load Balancing"
+  label: Persistence enabled
+  type: boolean
+  default: false
+  group: "Persistence"
+  show_subquestion_if: true
+  subquestions:
+    - variable: persistence.storageClass
+      default: ""
+      description: "Loadbalancing IP range"
+      type: storageclass
+      label: StorageClass
+    - variable: persistence.size
+      default: "5Gi"
+      description: "PVC size"
+      type: string
+      label: PVC size
+- variable: servicenow.url
+  default: "https://mymid.url"
+  required: true
+  description: "Servicenow URL"
+  type: string
+  label: Username
+  group: "Servicenow Configuration"
+- variable: servicenow.name
+  default: "my-user-name"
+  required: true
+  description: "Servicenow MID name"
+  type: string
+  label: MID name
+- variable: servicenow.username
+  default: ""
+  required: true
+  description: "Servicenow API username"
+  type: string
+  label: Username
+- variable: servicenow.password
+  default: ""
+  required: true
+  description: "Servicenow API username"
+  type: password
+  label: Password
