@@ -54,7 +54,6 @@ questions:
   type: string
   label: URL
   group: Registry
-  group: "Servicenow Configuration"
 - variable: imageCredentials.username
   default: "my-username"
   required: true

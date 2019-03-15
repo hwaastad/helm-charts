@@ -19,12 +19,12 @@ spec:
         app.kubernetes.io/name: {{ include "mid-server.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
+      imagePullSecrets:
+      - name:  {{ include "mid-server.fullname" . }}-registry
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        imagePullSecrets:
-        - name:  {{ include "mid-server.fullname" . }}-registry
         volumeMounts:
         - mountPath: /agent/work
           name: work-vol
