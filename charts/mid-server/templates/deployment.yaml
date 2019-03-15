@@ -24,7 +24,7 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         imagePullSecrets:
-        - name:  {{ .Values.image.pullSecrets }}
+        - name:  {{ include "mid-server.fullname" . }}-registry
         volumeMounts:
         - mountPath: /agent/work
           name: work-vol
