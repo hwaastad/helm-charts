@@ -32,18 +32,21 @@ questions:
   description: "Servicenow MID name"
   type: string
   label: MID name
+  group: "Servicenow Configuration"
 - variable: servicenow.username
   default: ""
   required: true
   description: "Servicenow API username"
   type: string
   label: Username
+  group: "Servicenow Configuration"
 - variable: servicenow.password
   default: ""
   required: true
   description: "Servicenow API password"
   type: password
   label: Password
+  group: "Servicenow Configuration"
 - variable: imageCredentials.registry
   default: "reg-proxy.daxdigital.net"
   required: true
@@ -51,15 +54,18 @@ questions:
   type: string
   label: URL
   group: Registry
+  group: "Servicenow Configuration"
 - variable: imageCredentials.username
   default: "my-username"
   required: true
   description: "Registry password"
   type: string
   label: Username
+  group: Registry
 - variable: imageCredentials.password
   default: ""
   required: true
   description: "Registry password"
   type: password
   label: Password
+  group: Registry
