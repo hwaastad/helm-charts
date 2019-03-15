@@ -3,10 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "local-path-provisioner.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "local-path-provisioner.name" . }}
-    helm.sh/chart: {{ include "local-path-provisioner.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{ include "local-path-provisioner.labels.standard" . | indent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -19,22 +16,29 @@ spec:
         app.kubernetes.io/name: {{ include "local-path-provisioner.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
+      serviceAccountName: local-path-provisioner-service-account
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+          command:
+            - local-path-provisioner
+            - --debug
+            - start
+            - --config
+            - /etc/config/config.json
+          volumeMounts:
+          - name: config-volume
+            mountPath: /etc/config/
+          env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          volumes:
+          - name: config-volume
+            configMap:
+              name: {{ include "local-path-provisioner.fullname" . }}-config
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
