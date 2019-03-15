@@ -24,23 +24,33 @@ questions:
   required: true
   description: "Servicenow URL"
   type: string
-  label: Username
+  label: URL
   group: "Servicenow Configuration"
 - variable: servicenow.name
-  default: "my-user-name"
+  default: "my-mid-name"
   required: true
   description: "Servicenow MID name"
   type: string
   label: MID name
+  group: "Servicenow Configuration"
 - variable: servicenow.username
   default: ""
   required: true
   description: "Servicenow API username"
   type: string
   label: Username
+  group: "Servicenow Configuration"
 - variable: servicenow.password
   default: ""
   required: true
-  description: "Servicenow API username"
+  description: "Servicenow API password"
   type: password
   label: Password
+  group: "Servicenow Configuration"
+- variable: image.pullSecret
+  default: "maxdigital"
+  required: true
+  description: "Registry secret to use"
+  type: string
+  label: Registry
+  group: Registry

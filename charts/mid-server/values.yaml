@@ -8,11 +8,10 @@ image:
   repository: reg-proxy.daxdigital.net/snow/mid-server
   tag: madrid
   pullPolicy: Always
-  pullSecrets: daxdigital
+  pullSecret: whatever
 
 nameOverride: ""
 fullnameOverride: ""
-
 
 servicenow:
   url: "https://mymid.url"
