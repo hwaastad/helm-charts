@@ -27,7 +27,7 @@ data:
   minResyncPeriod: {{ .Values.common.minResyncPeriod | quote }}
 {{- end}}
   storageClassMap: |
-    {{- range $classConfig := .Values.storageClasses }}
+    {{- range $classConfig := .Values.classes }}
     {{ $classConfig.name }}:
        hostDir: {{ $classConfig.hostDir }}
        mountDir: {{ if $classConfig.mountDir }} {{- $classConfig.mountDir -}} {{ else }} {{- $classConfig.hostDir -}} {{ end }}
@@ -110,7 +110,7 @@ spec:
               readOnly: true
             - mountPath: /dev
               name: provisioner-dev
-            {{- range $classConfig := .Values.storageClasses }}
+            {{- range $classConfig := .Values.classes }}
             - mountPath: {{ if $classConfig.mountDir }} {{- $classConfig.mountDir -}} {{ else }} {{- $classConfig.hostDir -}} {{ end }}
               name: {{ $classConfig.name }}
               mountPropagation: "HostToContainer"
@@ -122,14 +122,14 @@ spec:
         - name: provisioner-dev
           hostPath:
             path: /dev
-        {{- range $classConfig := .Values.storageClasses }}
+        {{- range $classConfig := .Values.classes }}
         - name: {{ $classConfig.name }}
           hostPath:
             path: {{ $classConfig.hostDir }}
         {{- end }}
 {{- $release := .Release }}
 {{- $chart := .Chart }}
-{{- range $val := .Values.storageClasses }}
+{{- range $val := .Values.classes }}
 {{- if $val.storageClass }}
 {{- $reclaimPolicy := $val.reclaimPolicy | default "Delete" }}
 ---
