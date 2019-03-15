@@ -35,13 +35,13 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-          volumes:
-          - name: config-volume
-            configMap:
-              name: {{ include "local-path-provisioner.fullname" . }}-config
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
+      volumes:
+      - name: config-volume
+        configMap:
+          name: {{ include "local-path-provisioner.fullname" . }}-config
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
