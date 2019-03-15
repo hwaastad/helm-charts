@@ -44,21 +44,22 @@ questions:
   description: "Servicenow API password"
   type: password
   label: Password
- - variable: imageCredentials.registry
-   default: "reg-proxy.daxdigital.net"
-   required: true
-   description: "Private registry url"
-   type: string
-   label: URL
- - variable: imageCredentials.username
-   default: "my-username"
-   required: true
-   description: "Registry password"
-   type: string
-   label: Username
- - variable: imageCredentials.password
-   default: ""
-   required: true
-   description: "Registry password"
-   type: password
-   label: Password
+- variable: imageCredentials.registry
+  default: "reg-proxy.daxdigital.net"
+  required: true
+  description: "Private registry url"
+  type: string
+  label: URL
+  group: Registry
+- variable: imageCredentials.username
+  default: "my-username"
+  required: true
+  description: "Registry password"
+  type: string
+  label: Username
+- variable: imageCredentials.password
+  default: ""
+  required: true
+  description: "Registry password"
+  type: password
+  label: Password
