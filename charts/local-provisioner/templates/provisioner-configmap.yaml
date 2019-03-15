@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.common.configMapName }}
+  namespace: {{ .Values.common.namespace }}
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ replace "+" "_" .Chart.Version | printf "%s-%s" .Chart.Name }}
+data:
+{{- if .Values.daemonset.nodeLabels }}
+  nodeLabelsForPV: |
+   {{- range $label := .Values.daemonset.nodeLabels }}
+    - {{$label}}
+   {{- end }}
+{{- end }}
+{{- if .Values.common.useAlphaAPI }}
+  useAlphaAPI: "true"
+{{- end }}
+{{- if .Values.common.useJobForCleaning }}
+  useJobForCleaning: "yes"
+{{- end}}
+{{- if .Values.common.useNodeNameOnly }}
+  useNodeNameOnly: "true"
+{{- end }}
+{{- if .Values.common.minResyncPeriod }}
+  minResyncPeriod: {{ .Values.common.minResyncPeriod | quote }}
+{{- end}}
+  storageClassMap: |
+    {{- range $classConfig := .Values.classes }}
+    {{ $classConfig.name }}:
+       hostDir: {{ $classConfig.hostDir }}
+       mountDir: {{ if $classConfig.mountDir }} {{- $classConfig.mountDir -}} {{ else }} {{- $classConfig.hostDir -}} {{ end }}
+       {{- if $classConfig.blockCleanerCommand }}
+       blockCleanerCommand:
+       {{- range $val := $classConfig.blockCleanerCommand }}
+         - "{{ $val -}}"{{- end}}
+       {{- end }}
+       {{- if $classConfig.volumeMode }}
+       volumeMode: {{ $classConfig.volumeMode }}
+       {{- end }}
+       {{- if $classConfig.fsType }}
+       fsType: {{ $classConfig.fsType }}
+       {{- end }}
+    {{- end }}
+---
