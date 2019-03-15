@@ -24,10 +24,10 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: {{ .Values.speaker.affinity.label | quote }}
+              - key: {{ .Values.daemonset.affinity.label | quote }}
                 operator: In
                 values:
-                  - {{ .Values.speaker.affinity.value | quote }}
+                  - {{ .Values.daemonset.affinity.value | quote }}
 {{- end }}
 {{- if .Values.daemonset.tolerations }}
       tolerations:
