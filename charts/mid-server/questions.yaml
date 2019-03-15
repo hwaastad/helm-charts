@@ -47,24 +47,10 @@ questions:
   type: password
   label: Password
   group: "Servicenow Configuration"
-- variable: imageCredentials.registry
-  default: "reg-proxy.daxdigital.net"
+- variable: image.pullSecret
+  default: "maxdigital"
   required: true
-  description: "Private registry url"
+  description: "Registry secret to use"
   type: string
-  label: URL
-  group: Registry
-- variable: imageCredentials.username
-  default: "my-username"
-  required: true
-  description: "Registry password"
-  type: string
-  label: Username
-  group: Registry
-- variable: imageCredentials.password
-  default: ""
-  required: true
-  description: "Registry password"
-  type: password
-  label: Password
+  label: Registry
   group: Registry
