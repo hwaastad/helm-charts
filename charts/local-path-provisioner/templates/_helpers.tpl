@@ -30,3 +30,14 @@ Create chart name and version as used by the chart label.
 {{- define "local-path-provisioner.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
+{{- /*
+local-path-provisioner.labels.standard prints the standard artemis Helm labels.
+The standard labels are frequently used in metadata.
+*/ -}}
+{{- define "local-path-provisioner.labels.standard" -}}
+app: {{ template "local-path-provisioner.name" . }}
+chart: {{ template "local-path-provisioner.chart" . }}
+heritage: {{ .Release.Service | quote }}
+release: {{ .Release.Name | quote }}
+{{- end -}}

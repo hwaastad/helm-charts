@@ -1,0 +1,9 @@
+categories:
+- storage
+questions:
+- variable: storage.path
+  description: "Path on node for storage"
+  label: Storage Path
+  type: string
+  default: "/opt/local-path-provisioner"
+  group: "Storage"
