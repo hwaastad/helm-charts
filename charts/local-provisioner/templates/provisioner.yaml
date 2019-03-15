@@ -18,9 +18,16 @@ spec:
         app: local-volume-provisioner
     spec:
       serviceAccountName: {{.Values.daemonset.serviceAccount}}
-{{- if .Values.daemonset.nodeSelector }}
-      nodeSelector:
-{{ .Values.daemonset.nodeSelector | toYaml | trim | indent 8 }}
+{{- if .Values.daemonset.affinity.enabled }}
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: {{ .Values.speaker.affinity.label | quote }}
+                operator: In
+                values:
+                  - {{ .Values.speaker.affinity.value | quote }}
 {{- end }}
 {{- if .Values.daemonset.tolerations }}
       tolerations:
