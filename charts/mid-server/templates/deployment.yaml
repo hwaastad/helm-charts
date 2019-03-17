@@ -27,7 +27,7 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         volumeMounts:
-        - mountPath: /agent/work
+        - mountPath: /agent
           name: work-vol
         env:
         - name: SN_PASSWD
