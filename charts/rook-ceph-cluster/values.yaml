@@ -1,0 +1,28 @@
+
+image:
+  repository: ceph/ceph
+  tag: v13.2.4-20190109
+  pullPolicy: Always
+  pullSecret: whatever
+# directory on k8s nodes that holds ceph data
+
+rook:
+  operatorNameSpace: "rook-ceph"
+  poolName: cord-ceph-pool
+  systemNameSpace: "rook-ceph-system"
+  clusterNameSpace: "rook-ceph"
+  fsName: "cord-ceph-filesystem"
+  fsPersistentVolumeName: "cord-cephfs-pv"
+  fsPersistentVolumeSize: 20Gi
+
+# StorageClass used by other charts to create PersistentVolumeClaims
+rbdStorageClassName: "cord-ceph-rbd"
+fsStorageClassName: "cord-cephfs"
+
+cluster:
+  storage:
+    useAllNodes: true
+    useAllDevices: true
+    directory: "/mnt/driveone"
+    nodes:
+      - ""
