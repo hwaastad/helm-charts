@@ -33,6 +33,6 @@ spec:
 #      - name: "storage"
 #      - name: "docker07"
  {{- range .Values.cluster.storage.nodes }}
-   {{- name: . | indent 6 }}
+   {{- name: . | quote | indent 6 }}
  {{- end }}
  {{- end }}
