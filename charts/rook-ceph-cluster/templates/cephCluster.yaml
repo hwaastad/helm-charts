@@ -31,6 +31,7 @@ spec:
 # {{- if not .Values.cluster.storage.useAllNodes }}
     nodes:
       - name: "storage"
+      - name: "docker07"
 # {{- range .Values.cluster.storage.nodes }}
 #   {{- . | indent 6 }}
 # {{- end }}
