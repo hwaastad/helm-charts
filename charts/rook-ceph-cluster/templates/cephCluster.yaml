@@ -30,9 +30,9 @@ spec:
     - path: {{ .Values.cluster.storage.directory | quote }}
  {{- if not .Values.cluster.storage.useAllNodes }}
     nodes:
-#      - name: "storage"
-#      - name: "docker07"
- {{- range .Values.cluster.storage.nodes }}
-    - name: {{- . | quote }}
- {{- end }}
- {{- end }}
+      - name: "storage"
+      - name: "docker07"
+# {{- range .Values.cluster.storage.nodes }}
+#    - name: {{- . | quote }}
+# {{- end }}
+# {{- end }}
