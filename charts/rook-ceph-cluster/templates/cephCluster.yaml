@@ -16,6 +16,7 @@ spec:
   serviceAccount: rook-ceph-cluster
   dashboard:
     enabled: true
+    ssl: false
   mon:
     count: 3
     allowMultiplePerNode: true
