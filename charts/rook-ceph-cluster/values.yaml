@@ -21,8 +21,8 @@ fsStorageClassName: "cord-cephfs"
 
 cluster:
   storage:
-    useAllNodes: true
+    useAllNodes: false
     useAllDevices: true
-    directory: "/mnt/driveone"
+    directory: "/mnt/ceph"
     nodes:
-      - ""
+      - "storage"
