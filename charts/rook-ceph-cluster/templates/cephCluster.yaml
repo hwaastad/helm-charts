@@ -28,9 +28,10 @@ spec:
       osdsPerDevice: "1" # this value can be overridden at the node or device level
     directories:
     - path: {{ .Values.cluster.storage.directory | quote }}
-{{- if not .Values.cluster.storage.useAllNodes }}
+# {{- if not .Values.cluster.storage.useAllNodes }}
     nodes:
-{{- range .Values.cluster.storage.nodes }}
-  {{- . | indent 6 }}
-{{- end }}
-{{- end }}
+      - "storage"
+# {{- range .Values.cluster.storage.nodes }}
+#   {{- . | indent 6 }}
+# {{- end }}
+# {{- end }}
