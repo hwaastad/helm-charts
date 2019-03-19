@@ -30,7 +30,7 @@ spec:
     - path: {{ .Values.cluster.storage.directory | quote }}
 # {{- if not .Values.cluster.storage.useAllNodes }}
     nodes:
-      - "storage"
+      - name: "storage"
 # {{- range .Values.cluster.storage.nodes }}
 #   {{- . | indent 6 }}
 # {{- end }}
