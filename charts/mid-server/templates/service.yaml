@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "mid-server.fullname" . }}
+  annotations:
+    field.cattle.io/targetWorkloadIds: '["deployment:{{ include "mid-server.name" . }}:{{ .Release.Name }}"]'
+  labels: {{ include "mid-server.labels.standard" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  clusterIP: None
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    workloadID_eventsystem: "true"
