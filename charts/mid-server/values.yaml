@@ -5,8 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: ceph/ceph
-  tag: v13.2.4-20190109
+  repository: reg-proxy.daxdigital.net/snow/mid-server
+  tag: madrid
   pullPolicy: Always
   pullSecret: whatever
 
