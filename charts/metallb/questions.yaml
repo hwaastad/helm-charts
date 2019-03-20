@@ -61,12 +61,6 @@ questions:
     description: Label to use for controller affinity
     label: Controller required Node label
     required: true
-  - variable: controller.affinity.value
-    type: string
-    default: "true"
-    description: Label value to use for affinity
-    label: Cotroller required Node label value
-    required: true
 - variable: speaker.affinity.enabled
   group: "Affinity"
   type: boolean

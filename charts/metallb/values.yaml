@@ -94,7 +94,6 @@ speaker:
   affinity:
     enabled: false
     label: my-label
-    value: my-value
 
 layer2:
   enabled: true
