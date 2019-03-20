@@ -41,9 +41,7 @@ spec:
             nodeSelectorTerms:
             - matchExpressions:
               - key: {{ .Values.controller.affinity.label | quote }}
-                operator: In
-                values:
-                - {{ .Values.controller.affinity.value | quote }}
+                operator: Exists
     {{- end }}
       containers:
       - name: controller

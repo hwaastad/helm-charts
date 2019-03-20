@@ -81,9 +81,3 @@ questions:
     description: Label to use for speaker affinity
     label: Speaker Required Node label
     required: true
-  - variable: speaker.affinity.value
-    type: string
-    default: "true"
-    description: Label value to use for speaker affinity
-    label: Speaker required Node label value
-    required: true

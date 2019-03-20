@@ -79,7 +79,6 @@ controller:
   affinity:
     enabled: false
     label: my-label
-    value: my-value
 
 # speaker contains configuration specific to the MetalLB speaker
 # daemonset.

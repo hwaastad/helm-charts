@@ -38,9 +38,7 @@ spec:
             nodeSelectorTerms:
             - matchExpressions:
               - key: {{ .Values.speaker.affinity.label | quote }}
-                operator: In
-                values:
-                - {{ .Values.speaker.affinity.value | quote }}
+                operator: Exists
     {{- end }}
       containers:
       - name: speaker
