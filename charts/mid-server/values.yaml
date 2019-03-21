@@ -13,6 +13,10 @@ image:
 nameOverride: ""
 fullnameOverride: ""
 
+service:
+  type: ClusterIP
+  port: 80
+
 servicenow:
   url: "https://mymid.url"
   name: "myname"
