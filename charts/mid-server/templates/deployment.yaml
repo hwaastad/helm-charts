@@ -29,11 +29,6 @@ spec:
         volumeMounts:
         - mountPath: /agent
           name: work-vol
-        ports:
-          - name: http
-            containerPort: 5000
-            hostPort: 8081
-            protocol: TCP
         env:
         - name: SN_PASSWD
           valueFrom:

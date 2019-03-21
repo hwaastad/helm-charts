@@ -10,9 +10,9 @@ spec:
   type: {{ .Values.service.type }}
   clusterIP: None
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - port: 42
+      targetPort: 42
       protocol: TCP
-      name: http
+      name: default
   selector:
     workloadID_eventsystem: "true"
