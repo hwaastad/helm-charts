@@ -29,6 +29,11 @@ spec:
         volumeMounts:
         - mountPath: /agent
           name: work-vol
+        ports:
+          - name: http
+            containerPort: 5000
+            hostPort: {{ default 8080 .Values.checkmkconf.hostport }}
+            protocol: TCP
         env:
         - name: SN_PASSWD
           valueFrom:
