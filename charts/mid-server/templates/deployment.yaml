@@ -32,7 +32,7 @@ spec:
         ports:
           - name: http
             containerPort: 5000
-            hostPort: {{ default 8080 .Values.checkmkconf.hostport }}
+            hostPort: 8080
             protocol: TCP
         env:
         - name: SN_PASSWD
