@@ -3,15 +3,16 @@ kind: Service
 metadata:
   name: {{ include "mid-server.fullname" . }}
   annotations:
-    field.cattle.io/targetWorkloadIds: '["deployment:{{ include "mid-server.name" . }}:{{ .Release.Name }}"]'
-  labels: {{ include "mid-server.labels.standard" . | indent 4 }}
+    field.cattle.io/targetWorkloadIds: '["deployment:{{ include "mid-server.name" . }}:{{ include "mid-server.fullname" . }}"]'
+  labels:
+{{ include "mid-server.labels.standard" . | indent 4 }}
 spec:
   type: {{ .Values.service.type }}
   clusterIP: None
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - port: 42
+      targetPort: 42
       protocol: TCP
-      name: http
+      name: default
   selector:
     workloadID_eventsystem: "true"

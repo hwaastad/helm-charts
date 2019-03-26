@@ -1,0 +1,66 @@
+categories:
+- storage
+questions:
+- variable: defaultImage
+  default: true
+  description: "Use default Rook image"
+  label: Use Default Image
+  type: boolean
+  show_subquestion_if: false
+  group: "Container Images"
+  subquestions:
+  - variable: image.repository
+    default: ceph/ceph
+    description: "Default images for Rook Ceph"
+    type: string
+    label: API Server Image
+  - variable: image.tag
+    default: "v13.2.2-20190319"
+    description: "The image tag of Rook Ceph image"
+    type: string
+    label: Image Tag For Rook Ceph Image
+- variable: rook.operatorNameSpace
+  default: rook-ceph
+  type: string
+  description: "The Rook Operator Namespace"
+  label: Namespace
+  group: Rook
+- variable: rook.poolName
+  default: cord-ceph-pool
+  type: string
+  description: The replication poolname
+  label: Poolname
+  group: Rook
+- variable: cluster.storage.useAllNodes
+  type: boolean
+  default: true
+  description: Use all nodes for storage
+  label: All nodes
+  group: Storage
+- variable: cluster.storage.useAllDevices
+  type: boolean
+  default: true
+  description: Use all available devices for storage
+  label: All devices
+  group: Storage
+- variable: cluster.storage.directory
+  type: string
+  default: "/mnt/ceph"
+  description: Directory for osd mounts
+  label: Path
+  group: Storage
+- variable: cluster.storage.retainPolicy
+  type: enum
+  options:
+  - Retain
+  - Delete
+  default: Retain
+  description: Retain Policy
+  label: Retain Policy
+  group: Storage
+- variable: cluster.pool.replicated
+  type: int
+  default: 3
+  description: Cluster pool replication
+  label: Replication number
+  group: Storage

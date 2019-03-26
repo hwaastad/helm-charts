@@ -12,6 +12,7 @@ spec:
   cephVersion:
     # For the latest ceph images, see https://hub.docker.com/r/ceph/ceph/tags
     image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+    allowUnsupported: true
   dataDirHostPath: /var/lib/rook
   serviceAccount: rook-ceph-cluster
   dashboard:
@@ -23,6 +24,9 @@ spec:
   storage:
     useAllNodes: {{ .Values.cluster.storage.useAllNodes }}
     useAllDevices: true
+{{- if not .Values.cluster.storage.useAllNodes }}
+    deviceFilter: {{ .Values.cluster.storage.deviceFilter | quote }}
+{{- end }}
     config:
       databaseSizeMB: "1024" # this value can be removed for environments with normal sized disks (100 GB or larger)
       journalSizeMB: "1024"  # this value can be removed for environments with normal sized disks (20 GB or larger)
@@ -31,9 +35,10 @@ spec:
     - path: {{ .Values.cluster.storage.directory | quote }}
  {{- if not .Values.cluster.storage.useAllNodes }}
     nodes:
-      - name: "storage"
-      - name: "docker07"
-# {{- range .Values.cluster.storage.nodes }}
-#    - name: {{- . | quote }}
-# {{- end }}
-# {{- end }}
+ {{- range $index, $node := .Values.cluster.storage.nodes }}
+    - name: {{ $node.name | quote }}
+  {{- if $node.deviceFilter | quote }}
+      deviceFilter: {{ $node.deviceFilter }}
+  {{- end }}
+ {{- end }}
+ {{- end }}
