@@ -1,0 +1,122 @@
+categories:
+- scm
+questions:
+- variable: defaultImage
+  default: true
+  description: "Use default gitea image"
+  label: Use Default Image
+  type: boolean
+  show_subquestion_if: false
+  group: "Container Images"
+  subquestions:
+  - variable: image.repository
+    default: gitea/gitea
+    description: "Default images for gitea SCM"
+    type: string
+    label: Tag
+  - variable: image.tag
+    default: "0.11.86"
+    description: "The image tag of gitea"
+    type: string
+    label: Image Tag For gitea Image
+
+- variable: postgresql.install
+  type: boolean
+  default: true
+  required: true
+  label: Install postgres
+  description: Install postgres before gitea
+  group: Database
+  show_subquestion_if: false
+  subquestions:
+  - variable: service.gitea.databaseHost
+    type: string
+    default: "my-host-name"
+    label: Hostname
+    description: Name of postgresql host
+    group: Database
+- variable: postgresql.postgresUser
+  type: string
+  default: gitea
+  label: Username
+  description: Postgres username
+  group: Database
+- variable: postgresql.postgresPassword
+  type: password
+  default: gitea
+  label: Password
+  description: Postgres password
+  group: Database
+- variable: service.sshDomain
+  default: localhost
+  type: string
+  description: The gitea SSH domain (host)
+  label: SSH Domain
+  group: gitea
+- variable: service.gitea.appName
+  type: string
+  default: gitea
+  label: Name
+  description: Application Name
+  required: true
+  group: gitea
+- variable: service.gitea.serverDomain
+  type: string
+  default: gitea.example.com
+  required: true
+  label: Server Domain
+  description: The gitea server domain
+  group: gitea
+- variable: service.gitea.serverRootUrl
+  type: string
+  default: http://gitea.example.com
+  required: true
+  label: Root URL
+  description: Full public URL for the gitea server
+  group: gitea
+- variable: persistence.enabled
+  type: boolean
+  default: true
+  label: Persistence Enabled
+  group: Persistence
+  show_subquestion_if: true
+  subquestions:
+  - variable: persistence.storageClass
+    type: storageclass
+    default: ""
+    label: StorageClass
+    group: Persistence
+  - variable: peristence.size
+    type: string
+    default: 1Gi
+    label: Size
+    description: Size of PVC
+- variable: postgresql.persistence.enabled
+  type: boolean
+  default: true
+  label: Postgres Persistence Enabled
+  group: Persistence
+  show_subquestion_if: true
+  subquestions:
+  - variable: postgresql.persistence.storageClass
+    type: storageclass
+    default: ""
+    label: StorageClass
+    group: Persistence
+  - variable: postgresql.peristence.size
+    type: string
+    default: 8Gi
+    label: Size
+    description: Size of Postgres PVC
+    group: Persistence
+- variable: service.ingress.enabled
+  type: boolean
+  default: false
+  label: Ingress enabled
+  group: Ingress
+  show_subquestion_if: true
+  subquestions:
+  - variable: service.ingress.hosts[0]
+    type: hostname
+    default: my-host-name
+    label: Hostname
