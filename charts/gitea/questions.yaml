@@ -15,7 +15,7 @@ questions:
     type: string
     label: Tag
   - variable: image.tag
-    default: "0.11.86"
+    default: "1.8"
     description: "The image tag of gitea"
     type: string
     label: Image Tag For gitea Image
