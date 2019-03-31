@@ -58,7 +58,8 @@ data:
     [security]
     INSTALL_LOCK = {{ .Values.service.gitea.installLock }}
     SECRET_KEY = {{ default "" .Values.service.gitea.securitySecretKey | b64enc | quote }}
-    INTERNAL_TOKEN_URL=file://crypt.txt
+    INTERNAL_TOKEN=mysecrettoken
+    INTERNAL_TOKEN_URI=file://crypt.txt
 
     [ui]
     EXPLORE_PAGING_NUM = {{ .Values.service.gitea.uiExplorePagingNum }}
