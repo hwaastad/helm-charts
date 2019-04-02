@@ -1,10 +1,10 @@
 apiVersion: ceph.rook.io/v1
 kind: CephBlockPool
 metadata:
-  name: replicapool
+  name: {{ .Values.rook.poolName }}
   labels:
 {{ include "rook-ceph-cluster.labels.standard" . | indent 4 }}
 spec:
   failureDomain: host
   replicated:
-    size: 1
+    size: {{ .Values.cluster.pool.replicated }}

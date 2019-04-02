@@ -1,7 +1,7 @@
 
 image:
   repository: ceph/ceph
-  tag: v13.2.4-20190109
+  tag: v13.2.2-20190319
   pullPolicy: Always
   pullSecret: whatever
 # directory on k8s nodes that holds ceph data
@@ -16,13 +16,21 @@ rook:
   fsPersistentVolumeSize: 20Gi
 
 # StorageClass used by other charts to create PersistentVolumeClaims
-rbdStorageClassName: "cord-ceph-rbd"
-fsStorageClassName: "cord-cephfs"
+storage:
+  rbdStorageClassName: "cord-ceph-rbd"
+  fsStorageClassName: "cord-cephfs"
 
+# Define cluster Spec
+# nodes:
+# - name: myname
+#   deviceFilter:"sdb"
 cluster:
+  pool:
+    replicated: 3
   storage:
+    retainPolicy: Retain
     useAllNodes: false
     useAllDevices: true
+    deviceFilter: {}
     directory: "/mnt/ceph"
-    nodes:
-      - "storage"
+    nodes: {}

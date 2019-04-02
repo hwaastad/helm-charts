@@ -4,7 +4,7 @@ metadata:
   name: {{ include "mid-server.fullname" . }}
   annotations:
     field.cattle.io/targetWorkloadIds: '["deployment:{{ include "mid-server.name" . }}:{{ include "mid-server.fullname" . }}"]'
-  labels: 
+  labels:
 {{ include "mid-server.labels.standard" . | indent 4 }}
 spec:
   type: {{ .Values.service.type }}

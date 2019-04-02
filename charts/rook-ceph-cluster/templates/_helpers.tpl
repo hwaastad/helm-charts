@@ -29,10 +29,10 @@ rook-ceph-cluster.labels.standard prints the standard artemis Helm labels.
 The standard labels are frequently used in metadata.
 */ -}}
 {{- define "rook-ceph-cluster.labels.standard" -}}
-app: {{ template "rook-ceph-cluster.name" . }}
-chart: {{ template "rook-ceph-cluster.chart" . }}
-heritage: {{ .Release.Service | quote }}
-release: {{ .Release.Name | quote }}
+app.kubernetes.io/name: {{ template "rook-ceph-cluster.name" . }}
+helm.sh/chart: {{ template "rook-ceph-cluster.chart" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+app.kubernetes.io/instance: {{ .Release.Name | quote }}
 {{- end -}}
 
 {{/*
