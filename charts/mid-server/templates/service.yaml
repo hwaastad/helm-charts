@@ -3,7 +3,6 @@ kind: Service
 metadata:
   name: {{ include "mid-server.fullname" . }}
   annotations:
-    field.cattle.io/targetWorkloadIds: '["deployment:{{ include "mid-server.name" . }}:{{ include "mid-server.fullname" . }}"]'
   labels:
 {{ include "mid-server.labels.standard" . | indent 4 }}
 spec:
@@ -15,4 +14,5 @@ spec:
       protocol: TCP
       name: default
   selector:
-    workloadID_eventsystem: "true"
+    app.kubernetes.io/name: {{ include "mid-server.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
