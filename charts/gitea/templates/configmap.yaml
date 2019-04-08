@@ -8,7 +8,6 @@ data:
   app.ini: |-
     APP_NAME = {{ .Values.service.gitea.appName }}
     RUN_MODE = {{ .Values.service.gitea.runMode }}
-    WHATEVER = "xxxx"
 
     [repository.upload]
     ENABLED = {{ .Values.service.gitea.repositoryUploadEnabled }}
@@ -24,7 +23,7 @@ data:
     SSH_DOMAIN = {{ default .Values.service.gitea.serverDomain .Values.service.sshDomain }}
     SSH_PORT = {{ .Values.service.sshPort }}
     SSH_LISTEN_PORT = {{ .Values.service.sshPort }}
-    LFS_START_SERVER = true
+    LFS_START_SERVER = false
 
     [service]
     ENABLE_CAPTCHA = {{ .Values.service.gitea.serviceEnableCaptcha }}
