@@ -8,6 +8,7 @@ data:
   app.ini: |-
     APP_NAME = {{ .Values.service.gitea.appName }}
     RUN_MODE = {{ .Values.service.gitea.runMode }}
+    WHATEVER = "xxxx"
 
     [repository.upload]
     ENABLED = {{ .Values.service.gitea.repositoryUploadEnabled }}
