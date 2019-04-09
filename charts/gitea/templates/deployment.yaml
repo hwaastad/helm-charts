@@ -37,8 +37,10 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: 3000
-            - containerPort: 22
+            - name: {{ default "gitea" .Values.service.nameOverride }}-http
+              containerPort: 3000
+            - name: {{ default "gitea" .Values.service.nameOverride }}-ssh
+              containerPort: 22
           livenessProbe:
             initialDelaySeconds: 180
             httpGet:
