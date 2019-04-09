@@ -23,6 +23,7 @@ data:
     SSH_DOMAIN = {{ default .Values.service.gitea.serverDomain .Values.service.sshDomain }}
     SSH_PORT = {{ .Values.service.sshPort }}
     SSH_LISTEN_PORT = {{ .Values.service.sshPort }}
+    LFS_START_SERVER = false
 
     [service]
     ENABLE_CAPTCHA = {{ .Values.service.gitea.serviceEnableCaptcha }}
@@ -47,6 +48,16 @@ data:
     PASSWD = {{ .Values.service.gitea.mailerPasswd }}
     USE_PLAIN_TEXT = text/plain
 
+    [oauth2]
+    ; Enables OAuth2 provider
+    ENABLED = false
+    ; Lifetime of an OAuth2 access token in seconds
+    ACCESS_TOKEN_EXPIRATION_TIME=3600
+    ; Lifetime of an OAuth2 access token in hours
+    REFRESH_TOKEN_EXPIRATION_TIME=730
+    ; OAuth2 authentication secret for access and refresh tokens, change this a unique string.
+    JWT_SECRET=Bk0yK7Y9g_p56v86KaHqjSbxvNvu3SbKoOdOt2ZcXvU
+
     [database]
     DB_TYPE = {{ .Values.service.gitea.databaseType | quote }}
     HOST = {{ template "gitea.database.host" . }}
@@ -57,6 +68,8 @@ data:
     [security]
     INSTALL_LOCK = {{ .Values.service.gitea.installLock }}
     SECRET_KEY = {{ default "" .Values.service.gitea.securitySecretKey | b64enc | quote }}
+    INTERNAL_TOKEN = mysecrettoken
+    ; INTERNAL_TOKEN_URI = file://crypt.txt
 
     [ui]
     EXPLORE_PAGING_NUM = {{ .Values.service.gitea.uiExplorePagingNum }}
@@ -98,7 +111,7 @@ data:
     RUN_AT_START = {{ .Values.service.gitea.cronRepoArchiveCleanupRunAtStart }}
     SCHEDULE = {{ .Values.service.gitea.cronRepoArchiveCleanupSchedule }}
     OLDER_THAN = {{ .Values.service.gitea.cronRepoArchiveCleanupOlderThan }}
-    
+
     [other]
     SHOW_FOOTER_BRANDING = {{ .Values.service.gitea.otherShowFooterBranding }}
     SHOW_FOOTER_VERSION = {{ .Values.service.gitea.otherShowFooterVersion }}
