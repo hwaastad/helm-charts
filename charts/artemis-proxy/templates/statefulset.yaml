@@ -24,6 +24,8 @@ spec:
         app: {{ template "artemis-proxy.name" . }}
         release: {{ .Release.Name | quote }}
     spec:
+      imagePullSecrets:
+        - name: daxdigital
       securityContext:
         runAsUser: 1000
         fsGroup: 1000
@@ -52,7 +54,6 @@ spec:
       - name: configure-cluster
         image: {{ template "artemis-proxy.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
-        imagePullSecrets: daxdigital
         command: ["/bin/sh", "/opt/configure-common/configure-cluster.sh"]
         volumeMounts:
           - name: config-override
