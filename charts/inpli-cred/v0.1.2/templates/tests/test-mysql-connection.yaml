@@ -24,6 +24,6 @@ spec:
           secretKeyRef:
             name: {{ template "inpli-cred.fullname" . }}
             key: mysql-password
-    command: ["sh", "-c", "mysql --host=$MYSQL_HOST --port=$MYSQL_PORT --user=$DATABASE_USER --password=$DATABASE_PASSWORD"]
+    command: ["sh", "-c", "mysql --host=$MYSQL_HOST --port=$MYSQL_PORT --user=$DATABASE_USER --password=$DATABASE_PASSWORD --execute \"SHOW DATABASES;\""]
   restartPolicy: Never
 {{- end }}

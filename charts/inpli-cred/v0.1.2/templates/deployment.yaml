@@ -38,6 +38,20 @@ spec:
                   key: mysql-password
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      initContainers:
+        - command: ["/bin/sh", "-c", "for i in $(seq 1 200); do mysql --host=$DB_HOST --port=3306 --user=$DB_USERNAME --password=$DB_PASSWORD --execute \"SHOW DATABASES;\" && exit 0 || sleep 3; done; exit 1"]
+          image: imega/mysql-client
+          name: {{ include "inpli-cred.fullname" . }}-init-container
+          env:
+            - name: DB_HOST
+              value: {{ template "inpli-cred.mysql.fullname" . }}
+            - name: DB_USERNAME
+              value: {{ default "" .Values.mysql.mysqlUser | quote }}
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "inpli-cred.fullname" . }}
+                  key: mysql-password
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
