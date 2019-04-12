@@ -25,6 +25,8 @@ spec:
           env:
             - name: SN_BASE_URL
               value: {{ default "" .Values.servicenow.url | quote }}
+            - name: DB_HOST
+              value: {{ template "inpli-cred.mysql.fullname" . }}
             - name: DB_USERNAME
               value: {{ default "" .Values.mysql.mysqlUser | quote }}
             - name: DB_DATABASE
