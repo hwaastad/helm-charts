@@ -26,3 +26,4 @@ spec:
             key: mysql-password
     command: ["sh", "-c", "mysql --host=$MYSQL_HOST --port=$MYSQL_PORT --user=$DATABASE_USER --password=$DATABASE_PASSWORD"]
   restartPolicy: Never
+{{- end }}
