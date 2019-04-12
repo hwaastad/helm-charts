@@ -18,7 +18,7 @@ spec:
       - name: DATABASE_NAME
         value: {{ default "" .Values.mysql.mysqlDatabase | quote }}
       - name: DATABASE_USER
-        value: {{ default "" .Values.mysql. | quote }}
+        value: {{ default "" .Values.mysql.mysqlUser | quote }}
       - name: DATABASE_PASSWORD
         valueFrom:
           secretKeyRef:
