@@ -1,0 +1,18 @@
+categories:
+- credentials
+questions:
+- variable: mysql.persistence.storageClass
+  label: StorageClass
+  type: storageclass
+  default: ""
+  group: MySQL
+- variable: mysql.mysqlRootPassword
+  label: Root Password
+  type: password
+  default: ""
+  group: MySQL
+- variable: mysql.mysqlPassword
+    label: Mysql User Password
+    type: password
+    default: ""
+    group: MySQL
