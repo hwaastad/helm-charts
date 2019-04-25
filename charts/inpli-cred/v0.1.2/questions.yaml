@@ -27,12 +27,10 @@ questions:
 - variable: mysql.mysqlRootPassword
   label: "Root Password"
   type: password
-  default: ""
   group: MySQL
   description: "MySQL Root password"
 - variable: mysql.mysqlPassword
   label: "Mysql User Password"
   type: password
-  default: ""
   group: MySQL
   description: "MySQL user password"
