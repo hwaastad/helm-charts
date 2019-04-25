@@ -12,7 +12,7 @@ questions:
   default: ""
   group: MySQL
 - variable: mysql.mysqlPassword
-    label: Mysql User Password
-    type: password
-    default: ""
-    group: MySQL
+  label: Mysql User Password
+  type: password
+  default: ""
+  group: MySQL
