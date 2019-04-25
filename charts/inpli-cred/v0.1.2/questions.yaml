@@ -1,0 +1,36 @@
+categories:
+- credentials
+questions:
+- variable: defaultImage
+  default: true
+  description: "Use default Image"
+  label: Use Default Image
+  type: boolean
+  show_subquestion_if: false
+  group: "Container Images"
+  subquestions:
+  - variable: image.repository
+    default: reg-proxy.daxdigital.net/app/inplicred
+    description: "Default images for InpliCred"
+    type: string
+    label: API Server Image
+  - variable: image.tag
+    default: "latest"
+    description: "The image tag of Image"
+    type: string
+    label: Image Tag For InpliCred Image
+- variable: mysql.persistence.storageClass
+  label: StorageClass
+  type: storageclass
+  default: ""
+  group: MySQL
+- variable: mysql.mysqlRootPassword
+  label: Root Password
+  type: password
+  default: ""
+  group: MySQL
+- variable: mysql.mysqlPassword
+  label: Mysql User Password
+  type: password
+  default: ""
+  group: MySQL
