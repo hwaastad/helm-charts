@@ -46,10 +46,10 @@ artemis.labels.standard prints the standard artemis Helm labels.
 The standard labels are frequently used in metadata.
 */ -}}
 {{- define "artemis-proxy.labels.standard" -}}
-app: {{ template "artemis-proxy.name" . }}
-chart: {{ template "artemis-proxy.chartref" . }}
-heritage: {{ .Release.Service | quote }}
-release: {{ .Release.Name | quote }}
+app.kubernetes.io/name: {{ template "artemis-proxy.name" . }}
+helm.sh/chart: {{ template "artemis-proxy.chartref" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+app.kubernetes.io/instance: {{ .Release.Name | quote }}
 {{- end -}}
 
 {{- /*
