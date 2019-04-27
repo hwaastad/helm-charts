@@ -1,19 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "local-provisioner.fullname" . }}
+  name: {{ template "local-provisioner.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "local-provisioner.name" . }}
-    helm.sh/chart: {{ include "local-provisioner.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{ include "local-provisioner.labels.standard" . | indent 4 }}
 spec:
-  type: {{ .Values.service.type }}
-  ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+  type: ClusterIP
   selector:
-    app.kubernetes.io/name: {{ include "local-provisioner.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    app: {{ template "local-provisioner.fullname" . }}
+  ports:
+  - name: http
+    port: 8080
+    protocol: TCP

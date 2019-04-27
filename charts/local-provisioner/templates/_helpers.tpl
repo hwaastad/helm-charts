@@ -30,3 +30,14 @@ Create chart name and version as used by the chart label.
 {{- define "local-provisioner.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
+{{- /*
+local-provisioner.labels.standard prints the standard artemis Helm labels.
+The standard labels are frequently used in metadata.
+*/ -}}
+{{- define "local-provisioner.labels.standard" -}}
+app.kubernetes.io/name: {{ template "local-provisioner.name" . }}
+helm.sh/chart: {{ template "local-provisioner.chart" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+app.kubernetes.io/instance: {{ .Release.Name | quote }}
+{{- end -}}
