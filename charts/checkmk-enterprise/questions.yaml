@@ -1,0 +1,97 @@
+categories:
+- servicenow
+- monitoring
+questions:
+- variable: defaultImage
+  default: true
+  description: "Use default CheckMK image"
+  label: Use Default Image
+  type: boolean
+  show_subquestion_if: false
+  group: "Container Images"
+  subquestions:
+  - variable: image.repository
+    default: reg-proxy.daxdigital.net/overvaakning/checkmk
+    description: "Default CheckMK image"
+    type: string
+    label: CheckMK Server Image
+  - variable: image.tag
+    default: "2.0-develop"
+    description: "The image tag of CheckMK"
+    type: string
+    label: Image Tag For CheckMK Image
+- variable: persistence.enabled
+  description: "Enable StorageClass"
+  label: Persistence enabled
+  type: boolean
+  default: true
+  group: "Persistence"
+  show_subquestion_if: true
+  subquestions:
+    - variable: persistence.storageClass
+      default: ""
+      description: "Select StorageClass"
+      type: storageclass
+      label: StorageClass
+    - variable: persistence.size
+      default: "5Gi"
+      description: "PVC size"
+      type: string
+      label: PVC size
+- variable: checkmkconf.password
+  default: "test123"
+  required: true
+  description: "Check_MK login password"
+  type: password
+  label: Password
+  group: "Check_MK Configuration"
+- variable: checkmkconf.automationsecret
+  default: "test123"
+  required: true
+  description: "Check_MK automation secret"
+  type: password
+  label: Automation Secret
+  group: "Check_MK Configuration"
+- variable: servicenow.url
+  default: "http://midip:midport/api/mid/em/jsonv2"
+  required: true
+  description: "Servicenow MID URL"
+  type: string
+  label: URL
+  group: "Servicenow Configuration"
+- variable: servicenow.username
+  default: "foo"
+  required: true
+  description: "Servicenow API username"
+  type: string
+  label: Username
+  group: "Servicenow Configuration"
+- variable: servicenow.password
+  default: "bar"
+  required: true
+  description: "Servicenow API password"
+  type: password
+  label: Password
+  group: "Servicenow Configuration"
+- variable: image.pullSecret
+  default: "maxdigital"
+  required: true
+  description: "Registry secret to use"
+  type: string
+  label: Registry
+  group: Registry
+- variable: ingress.enabled
+  default: true
+  description: "Expose app using Layer 7 Load Balancer - ingress"
+  type: boolean
+  label: Expose app using Layer 7 Load Balancer
+  show_subquestion_if: true
+  group: "Services and Load Balancing"
+  required: true
+  subquestions:
+  - variable: ingress.hosts[0]
+    default: "xip.io"
+    description: "Hostname to your app installation"
+    type: hostname
+    required: true
+    label: Hostname

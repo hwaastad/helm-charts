@@ -1,0 +1,74 @@
+# Default values for checkmk.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: reg-proxy.daxdigital.net/overvaakning/checkmk
+  tag: 2.0-develop
+  pullPolicy: Always
+  pullSecret: maxdigital
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 5000
+
+servicenow:
+  url: "http://midip:midport/api/mid/em/jsonv2"
+  name: "myname"
+  username: "myusername"
+  password: "mypass"
+
+checkmkconf:
+  password: "test123"
+  automationsecret: "test123"
+
+ingress:
+  enabled: true
+  annotations: {
+    # nginx.ingress.kubernetes.io/rewrite-target: /,
+    # nginx.ingress.kubernetes.io/add-base-url: "true"
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  }
+  path: /cmk/check_mk
+  hosts:
+    - docker05.10.21.14.25.xip.io
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+
+nginx:
+  username: "foo"
+  password: "bar"
+
+persistence:
+  enabled: false
+  storageClass: ""
+  size: "5Gi"
+  annotations: {}
+  accessMode: ReadWriteOnce
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+podAntiAffinity: soft
