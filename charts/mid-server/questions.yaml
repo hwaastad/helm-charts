@@ -55,8 +55,8 @@ questions:
   label: Registry
   group: Registry
 - variable: podAntiAffinity
-  description: "Pod podAntiAffinity"
-  label: podAntiAffinity
+  description: "Hard: required on scheduling, soft: preferred on scheduling"
+  label: Pod Anti Affinity
   type: enum
   default: soft
   group: "Affinity"
