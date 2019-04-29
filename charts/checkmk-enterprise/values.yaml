@@ -49,7 +49,7 @@ nginx:
   password: "bar"
 
 persistence:
-  enabled: false
+  enabled: true
   storageClass: ""
   size: "5Gi"
   annotations: {}
