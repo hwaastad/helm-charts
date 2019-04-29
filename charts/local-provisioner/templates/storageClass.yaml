@@ -4,16 +4,5 @@
 {{- range $val := .Values.classes }}
 {{- if $val.storageClass }}
 ---
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: {{ $val.name }}
-provisioner: kubernetes.io/no-provisioner
-volumeBindingMode: WaitForFirstConsumer
-{{- if kindIs "map" $val.storageClass }}
-reclaimPolicy: {{ $val.storageClass.reclaimPolicy | default "Delete" }}
-{{- else }}
-reclaimPolicy: Delete
-{{- end }}
 {{- end }}
 {{- end }}
