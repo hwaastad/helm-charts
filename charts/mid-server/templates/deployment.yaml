@@ -3,10 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "mid-server.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "mid-server.name" . }}
-    helm.sh/chart: {{ include "mid-server.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{ include "mid-server.labels.standard" . | indent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -19,6 +16,24 @@ spec:
         app.kubernetes.io/name: {{ include "mid-server.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
+{{- if eq .Values.podAntiAffinity "hard" }}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - topologyKey: "kubernetes.io/hostname"
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: {{ template "mid-server.name" . }}
+{{- else if eq .Values.podAntiAffinity "soft" }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            podAffinityTerm:
+              topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: {{ template "mid-server.name" . }}
       imagePullSecrets:
       - name: {{ .Values.image.pullSecret }}
       hostname: {{ .Values.servicenow.name }}

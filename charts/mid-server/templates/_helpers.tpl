@@ -32,16 +32,12 @@ Create chart name and version as used by the chart label.
 {{- end -}}
 
 {{- /*
-mid-server.labels.standard prints the standard artemis Helm labels.
+mid-server.labels.standard prints the standard gitea Helm labels.
 The standard labels are frequently used in metadata.
 */ -}}
 {{- define "mid-server.labels.standard" -}}
-app: {{ template "mid-server.name" . }}
-chart: {{ template "mid-server.chart" . }}
-heritage: {{ .Release.Service | quote }}
-release: {{ .Release.Name | quote }}
+app.kubernetes.io/name: {{ template "mid-server.name" . }}
+helm.sh/chart: {{ template "mid-server.chart" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+app.kubernetes.io/instance: {{ .Release.Name | quote }}
 {{- end -}}
-
-{{- define "imagePullSecret" }}
-{{- printf "{\"auths\": {\"%s\": {\"auth\": \"%s\"}}}" .Values.imageCredentials.registry (printf "%s:%s" .Values.imageCredentials.username .Values.imageCredentials.password | b64enc) | b64enc }}
-{{- end }}

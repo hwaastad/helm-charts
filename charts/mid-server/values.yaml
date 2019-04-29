@@ -55,4 +55,4 @@ nodeSelector: {}
 
 tolerations: []
 
-affinity: {}
+podAntiAffinity: soft

@@ -54,3 +54,10 @@ questions:
   type: string
   label: Registry
   group: Registry
+- variable: podAntiAffinity
+  description: "Pod podAntiAffinity"
+  label: podAntiAffinity
+  type: enum
+  default: soft
+  group: "Affinity"
+  options: ["soft","hard"]
