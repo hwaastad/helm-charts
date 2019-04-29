@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: {{ include "checkmk-enterprise.fullname" . }}
   labels:
+    kubernetes.io/cluster-service: "true"
 {{ include "checkmk-enterprise.labels.standard" . | indent 4 }}
 spec:
   type: {{ .Values.service.type }}
