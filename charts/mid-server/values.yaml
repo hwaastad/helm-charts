@@ -14,8 +14,10 @@ nameOverride: ""
 fullnameOverride: ""
 
 service:
+  enabled: false
   type: ClusterIP
-  port: 80
+  port: 162
+  protocol: UDP
 
 servicenow:
   url: "https://mymid.url"

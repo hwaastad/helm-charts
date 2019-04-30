@@ -61,3 +61,20 @@ questions:
   default: soft
   group: "Affinity"
   options: ["soft","hard"]
+- variable: service.enabled
+  description: "Expose serviceport"
+  label: Expose port
+  type: boolean
+  default: false
+  group: "Service Ports"
+  show_subquestion_if: true
+  subquestions:
+    - variable: service.port
+      default: 162
+      type: int
+      label: Port Number
+    - variable: service.protocol
+      default: "UDP"
+      options: ["UDP","TCP"]
+      type: enum
+      label: Protocol
