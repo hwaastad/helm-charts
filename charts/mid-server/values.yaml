@@ -18,6 +18,7 @@ service:
   type: ClusterIP
   port: 162
   protocol: UDP
+  name: "snmp-trap"
 
 servicenow:
   url: "https://mymid.url"

@@ -7,12 +7,11 @@ metadata:
 {{ include "mid-server.labels.standard" . | indent 4 }}
 spec:
   type: {{ .Values.service.type }}
-  clusterIP: None
   ports:
-    - port: 42
-      targetPort: 42
-      protocol: TCP
-      name: default
+    - port:
+      targetPort: {{ .Values.service.port }}
+      protocol: {{ .Values.service.protocol }}
+      name: {{ .Values.service.type }}
   selector:
     app.kubernetes.io/name: {{ include "mid-server.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
