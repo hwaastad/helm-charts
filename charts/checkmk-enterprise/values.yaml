@@ -26,6 +26,7 @@ servicenow:
 checkmkconf:
   password: "test123"
   automationsecret: "test123"
+  defaultCommunity: "public"
 
 ingress:
   enabled: true

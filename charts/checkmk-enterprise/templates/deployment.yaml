@@ -95,6 +95,11 @@ spec:
             secretKeyRef:
               name: {{ include "checkmk-enterprise.fullname" . }}
               key: servicenow-password
+        - name: DEFAULT_SNMP_COMMUNITY
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "checkmk-enterprise.fullname" . }}
+              key: checkmk-default-snmp-community
         - name: SNOW_MID_URL
           value: {{ .Values.servicenow.url | quote }}
         - name: SNOW_MID_USER

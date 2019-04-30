@@ -52,6 +52,13 @@ questions:
   type: password
   label: Automation Secret
   group: "Check_MK Configuration"
+- variable: checkmkconf.defaultCommunity
+  default: "public"
+  required: false
+  description: "AllHosts default SNMP community"
+  type: password
+  label: SNMP Community
+  group: "Check_MK Configuration"
 - variable: servicenow.url
   default: "http://midip:midport/api/mid/em/jsonv2"
   required: true
