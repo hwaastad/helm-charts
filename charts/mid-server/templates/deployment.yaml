@@ -57,7 +57,7 @@ spec:
           value: {{ .Values.servicenow.username | quote }}
         - name: SN_MID_NAME
           value: {{ .Values.servicenow.name | quote }}
-{{- if eq .Values.service.enabled }}
+{{- if .Values.service.enabled }}
         ports:
         - containerPort: {{ .Values.service.port }}
           name: trap-port
