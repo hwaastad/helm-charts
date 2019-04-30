@@ -59,7 +59,7 @@ spec:
           value: {{ .Values.servicenow.name | quote }}
         ports:
         - containerPort: {{ .Values.service.port }}
-          name: {{ .Values.service.port }}
+          name: {{ .Values.service.name }}
           protocol: {{ .Values.service.protocol }}
         resources:
             {{- toYaml .Values.resources | nindent 12 }}

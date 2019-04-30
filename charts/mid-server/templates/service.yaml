@@ -11,7 +11,7 @@ spec:
     - port:
       targetPort: {{ .Values.service.port }}
       protocol: {{ .Values.service.protocol }}
-      name: {{ .Values.service.type }}
+      name: {{ .Values.service.name }}
   selector:
     app.kubernetes.io/name: {{ include "mid-server.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
