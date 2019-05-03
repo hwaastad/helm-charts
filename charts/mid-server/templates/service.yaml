@@ -6,7 +6,7 @@ metadata:
   labels:
 {{ include "mid-server.labels.standard" . | indent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  clusterIP: None
   ports:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.name }}

@@ -70,7 +70,7 @@ questions:
   show_subquestion_if: true
   subquestions:
     - variable: service.port
-      default: 162
+      default: 1162
       type: int
       label: Port Number
     - variable: service.protocol
