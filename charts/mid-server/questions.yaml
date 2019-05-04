@@ -19,6 +19,17 @@ questions:
       description: "PVC size"
       type: string
       label: PVC size
+- variable: resources.requests.memory
+  default: "1024Mi"
+  description: "Memory limit"
+  type: string
+  label: Memory
+  group: "Resources"
+- variable: resources.requests.cpu
+  default: "1000m"
+  description: "CPU limit"
+  type: string
+  label: CPU
 - variable: servicenow.url
   default: "https://mymid.url"
   required: true
