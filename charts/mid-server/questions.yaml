@@ -30,6 +30,7 @@ questions:
   description: "CPU limit"
   type: string
   label: CPU
+  group: "Resources"
 - variable: servicenow.url
   default: "https://mymid.url"
   required: true
