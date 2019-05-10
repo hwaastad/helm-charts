@@ -15,7 +15,7 @@ fullnameOverride: ""
 
 service:
   type: ClusterIP
-  port: 5000
+  port: 80
 
 servicenow:
   url: "http://midip:midport/api/mid/em/jsonv2"
