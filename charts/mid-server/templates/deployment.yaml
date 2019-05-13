@@ -57,6 +57,10 @@ spec:
           value: {{ .Values.servicenow.username | quote }}
         - name: SN_MID_NAME
           value: {{ .Values.servicenow.name | quote }}
+        - name: MEM_TOTAL_MB
+          valueFrom:
+            resourceFieldRef:
+              resource: limits.memory
         ports:
         - containerPort: {{ .Values.service.port }}
           name: {{ .Values.service.name }}
