@@ -1,0 +1,79 @@
+categories:
+- repository
+- scm
+questions:
+- variable: defaultImage
+  default: true
+  description: "Use default Nexus image"
+  label: Use Default Image
+  type: boolean
+  show_subquestion_if: false
+  group: "Container Images"
+  subquestions:
+  - variable: image.repository
+    default: quay.io/travelaudience/docker-nexus
+    description: "Default nexus image"
+    type: string
+    label: Nexus Server Image
+  - variable: image.tag
+    default: "3.15.2"
+    description: "The image tag of Nexus"
+    type: string
+    label: Image Tag For Nexus Image
+- variable: persistence.enabled
+  description: "Enable StorageClass"
+  label: Persistence enabled
+  type: boolean
+  default: true
+  group: "Persistence"
+  show_subquestion_if: true
+  subquestions:
+    - variable: persistence.storageClass
+      default: ""
+      description: "Select StorageClass"
+      type: storageclass
+      label: StorageClass
+    - variable: persistence.size
+      default: "8Gi"
+      description: "PVC size"
+      type: string
+      label: PVC size
+- variable: resources.requests.memory
+  default: "1024Mi"
+  description: "Memory limit"
+  type: string
+  label: Memory
+  group: "Resources"
+- variable: resources.requests.cpu
+  default: "1000m"
+  description: "CPU limit"
+  type: string
+  label: CPU
+  group: "Resources"
+- variable: nexus.nodeAffinity
+  description: "Schedule on hosts having label"
+  label: Node Affinity
+  type: string
+  default: storage
+  group: "Affinity"
+- variable: ingress.enabled
+  default: false
+  description: "Use Ingress"
+  label: Ingress
+  type: boolean
+  show_subquestion_if: true
+  group: "Ingress"
+  subquestions:
+  - variable: nexus.env.nexusHttpHost
+    type: hostname
+    default: ""
+    label: UI hostname
+  - variable: nexus.env.nexusDockerHost
+    type: hostname
+    default: ""
+    label: Docker hostname
+  - variable: ingress.tls.secretName[0]
+    type: string
+    default: ""
+    label: Secret name
+    description: Name of Certificate secret

@@ -1,0 +1,45 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "sonatype-nexus.fullname" . }}
+  labels:
+{{ include "sonatype-nexus.labels.standard" . | indent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  rules:
+  {{- if .Values.nexus.env.nexusHttpHost }}
+  - host: {{ .Values.nexus.env.nexusHttpHost }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ template "sonatype-nexus.fullname" . }}
+          servicePort: {{ .Values.nexus.nexusPort }}
+        path: {{ .Values.ingress.path }}
+  {{- end }}
+  {{- if .Values.nexus.env.nexusDockerHost }}
+  - host: {{ .Values.nexus.env.nexusDockerHost }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ template "sonatype-nexus.fullname" . }}
+          servicePort: {{ .Values.nexus.dockerPort }}
+        path: {{ .Values.ingress.path }}
+  {{- end }}
+{{- if .Values.ingress.tls }}
+  tls:
+  - hosts:
+    {{- if .Values.nexus.env.nexusHttpHost }}
+    - {{ .Values.nexus.env.nexusHttpHost }}
+    {{- end }}
+    {{- if .Values.nexus.env.nexusDockerHost }}
+    - {{ .Values.nexus.env.nexusDockerHost }}
+    {{- end }}
+    {{- if .Values.ingress.tls.secretName }}
+    secretName: {{ .Values.ingress.tls.secretName | quote }}
+    {{- end }}
+{{- end }}
+{{- end }}
