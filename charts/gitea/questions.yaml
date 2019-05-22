@@ -19,7 +19,6 @@ questions:
     description: "The image tag of gitea"
     type: string
     label: Image Tag For gitea Image
-
 - variable: postgresql.install
   type: boolean
   default: true
@@ -47,12 +46,18 @@ questions:
   label: Password
   description: Postgres password
   group: Database
-- variable: service.sshDomain
-  default: localhost
-  type: string
-  description: The gitea SSH domain (host)
-  label: SSH Domain
-  group: gitea
+- variable: service.sshEnable
+  type: boolean
+  default: false
+  label: Enable SSH
+  show_subquestion_if: true
+  subquestions:
+  - variable: service.sshDomain
+    default: localhost
+    type: string
+    description: The gitea SSH domain (used in clone url)
+    label: SSH Domain
+    group: gitea
 - variable: service.gitea.appName
   type: string
   default: gitea

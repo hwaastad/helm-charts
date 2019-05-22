@@ -29,6 +29,9 @@ service:
   ##
   httpNodePort:
 
+  ## ssh enable/disable
+  sshEnable: true
+
   ## SSH listen port.
   ##
   sshPort: 22

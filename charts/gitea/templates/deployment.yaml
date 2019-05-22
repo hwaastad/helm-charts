@@ -39,8 +39,10 @@ spec:
           ports:
             - name: {{ default "gitea" .Values.service.nameOverride }}-http
               containerPort: 3000
+              {{- if .Values.service.sshEnable }}
             - name: {{ default "gitea" .Values.service.nameOverride }}-ssh
               containerPort: 22
+              {{- end }}
           livenessProbe:
             initialDelaySeconds: 180
             httpGet:

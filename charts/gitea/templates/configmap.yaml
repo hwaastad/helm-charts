@@ -20,6 +20,7 @@ data:
     DOMAIN = {{ .Values.service.gitea.serverDomain }}
     ROOT_URL = {{ .Values.service.gitea.serverRootUrl }}
     LANDING_PAGE = {{ .Values.service.gitea.serverLandingPage }}
+    DISABLE_SSH = {{ .Values.service.sshEnable }}
     SSH_DOMAIN = {{ default .Values.service.gitea.serverDomain .Values.service.sshDomain }}
     SSH_PORT = {{ .Values.service.sshPort }}
     SSH_LISTEN_PORT = {{ .Values.service.sshPort }}
