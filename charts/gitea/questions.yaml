@@ -91,7 +91,7 @@ questions:
     default: ""
     label: StorageClass
     group: Persistence
-  - variable: peristence.size
+  - variable: persistence.size
     type: string
     default: 1Gi
     label: Size
@@ -108,7 +108,7 @@ questions:
     default: ""
     label: StorageClass
     group: Persistence
-  - variable: postgresql.peristence.size
+  - variable: postgresql.persistence.size
     type: string
     default: 8Gi
     label: Size
