@@ -121,7 +121,8 @@ questions:
   group: Ingress
   show_subquestion_if: true
   subquestions:
-  - variable: service.ingress.hosts[0]
-    type: hostname
-    default: my-host-name
-    label: Hostname
+  - variable: service.ingress.tls.secretName
+      type: string
+      default: ""
+      label: Secret name
+      description: Name of Certificate secret

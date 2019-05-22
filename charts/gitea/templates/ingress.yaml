@@ -14,16 +14,18 @@ metadata:
     {{- end }}
 spec:
   rules:
-    {{- range .Values.service.ingress.hosts }}
-    - host: {{ . }}
+    - host: {{ .Values.service.gitea.serverDomain }}
       http:
         paths:
           - backend:
               serviceName: {{ printf "%s-%s" $releaseName $serviceName | trunc 63 | trimSuffix "-" }}
               servicePort: {{ $httpPort }}
-    {{- end -}}
 {{- if .Values.service.ingress.tls }}
   tls:
-{{ toYaml .Values.service.ingress.tls | indent 4 }}
+  - hosts:
+    - {{ .Values.service.gitea.serverDomain }}
+  {{- if .Values.ingress.tls.secretName }}
+    secretName: {{ .Values.ingress.tls.secretName | quote }}
+  {{- end }}
 {{- end -}}
 {{- end -}}
