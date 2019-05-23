@@ -15,7 +15,7 @@ questions:
     type: string
     label: Tag
   - variable: image.tag
-    default: "1.8"
+    default: "1.8.1"
     description: "The image tag of gitea"
     type: string
     label: Image Tag For gitea Image
@@ -50,12 +50,13 @@ questions:
   type: boolean
   default: false
   label: Enable SSH
+  group: gitea
   show_subquestion_if: true
   subquestions:
   - variable: service.sshDomain
-    default: localhost
+    default: gitea.example.com
     type: string
-    description: The gitea SSH domain (used in clone url)
+    description: "The gitea SSH domain (used in clone url)"
     label: SSH Domain
     group: gitea
 - variable: service.gitea.appName
@@ -74,7 +75,7 @@ questions:
   group: gitea
 - variable: service.gitea.serverRootUrl
   type: string
-  default: http://gitea.example.com
+  default: https://gitea.example.com
   required: true
   label: Root URL
   description: Full public URL for the gitea server
@@ -122,7 +123,7 @@ questions:
   show_subquestion_if: true
   subquestions:
   - variable: service.ingress.tls.secretName
-      type: string
-      default: ""
-      label: Secret name
-      description: Name of Certificate secret
+    type: string
+    default: ""
+    label: Secret name
+    description: Name of Certificate secret

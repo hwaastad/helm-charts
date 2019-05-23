@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "gitea.fullname" . }}
@@ -33,33 +33,32 @@ spec:
 {{ toYaml .Values.tolerations | indent 8 }}
       {{- end }}
       containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: {{ default "gitea" .Values.service.nameOverride }}-http
-              containerPort: 3000
-              {{- if .Values.service.sshEnable }}
-            - name: {{ default "gitea" .Values.service.nameOverride }}-ssh
-              containerPort: 22
-              {{- end }}
-          livenessProbe:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - name: {{ default "gitea" .Values.service.nameOverride }}-http
+          containerPort: {{ .Values.service.httpPort | int }}
+        {{- if .Values.service.sshEnable }}
+        - name: {{ default "gitea" .Values.service.nameOverride }}-ssh
+          containerPort: {{ .Values.service.sshPort | int }}
+        {{- end }}
+        livenessProbe:
             initialDelaySeconds: 180
             httpGet:
               path: /
               port: 3000
-          readinessProbe:
+        readinessProbe:
             initialDelaySeconds: 180
             httpGet:
               path: /
               port: 3000
-          env:
-            # https://github.com/gogits/gitea/tree/master/docker#container-options
-            - name: SOCAT_LINK
-              value: "false"
-          resources:
+        env:
+        - name: SOCAT_LINK
+          value: "false"
+        resources:
 {{ toYaml .Values.resources | indent 12 }}
-          volumeMounts:
+        volumeMounts:
             - name: data
               mountPath: /data
             - name: config
