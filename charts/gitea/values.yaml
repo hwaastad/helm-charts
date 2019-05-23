@@ -289,6 +289,7 @@ service:
     ## TLS configuration.
     ## Secrets must be manually created in the namespace.
     ##
+    tls: []
     # tls:
     #   - secretName: gitea-tls
     #     hosts:
