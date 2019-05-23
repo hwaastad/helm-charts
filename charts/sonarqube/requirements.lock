@@ -1,0 +1,6 @@
+dependencies:
+- name: sonarqube
+  repository: https://kubernetes-charts.storage.googleapis.com/
+  version: 1.0.3
+digest: sha256:89a2a05d0797cf157483c3f85a2b9267ef9d8b22518572415e3ec3270f9c4180
+generated: 2019-05-22T13:03:47.475251631+02:00
