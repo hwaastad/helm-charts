@@ -17,9 +17,9 @@ spec:
     - host: {{ .Values.service.gitea.serverDomain }}
       http:
         paths:
-          - backend:
-              serviceName: {{ printf "%s-%s" $releaseName $serviceName | trunc 63 | trimSuffix "-" }}
-              servicePort: {{ $httpPort }}
+        - backend:
+            serviceName: {{ printf "%s-%s" $releaseName $serviceName | trunc 63 | trimSuffix "-" }}
+            servicePort: {{ $httpPort }}
 {{- if .Values.service.ingress.tls }}
   tls:
   - hosts:
