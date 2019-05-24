@@ -44,12 +44,14 @@ spec:
           containerPort: {{ .Values.service.sshPort | int }}
         {{- end }}
         livenessProbe:
-            initialDelaySeconds: 180
+            initialDelaySeconds: 60
+            periodSeconds: 60
             httpGet:
               path: /
               port: 3000
         readinessProbe:
-            initialDelaySeconds: 180
+            initialDelaySeconds: 60
+            periodSeconds: 60
             httpGet:
               path: /
               port: 3000

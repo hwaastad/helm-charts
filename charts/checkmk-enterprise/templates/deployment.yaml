@@ -63,8 +63,8 @@ spec:
         securityContext:
           privileged: true
         ports:
-        - containerPort: 5000
-          name: http
+        - containerPort: {{ .Values.service.port | int }}
+          name: {{ default "checkmk-enterprise" .Values.service.nameOverride }}-http
         livenessProbe:
           httpGet:
             path: /

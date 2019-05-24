@@ -24,8 +24,8 @@ spec:
   tls:
   - hosts:
     - {{ .Values.service.gitea.serverDomain }}
-  {{- if .Values.ingress.tls.secretName }}
-    secretName: {{ .Values.ingress.tls.secretName | quote }}
+  {{- if .Values.service.ingress.tls.secretName }}
+    secretName: {{ .Values.service.ingress.tls.secretName }}
   {{- end }}
 {{- end -}}
 {{- end -}}

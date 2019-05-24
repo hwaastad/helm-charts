@@ -126,7 +126,7 @@ service:
 
     ## Mail from address. Format RFC 5322, email@example.com, or "Name" <email@example.com>
     ##
-    mailerFrom:
+    mailerFrom: gitea@telenor.com
 
     ## Prefix prepended mail subject.
     ##
@@ -208,6 +208,9 @@ service:
     ## Change this value for your installation.
     ##
     securitySecretKey: "changeme"
+
+    ## Change this internal tokens
+    securityInternalToken: "mysecrettoken"
 
     ## Number of repositories that are showed in one explore page
     ##

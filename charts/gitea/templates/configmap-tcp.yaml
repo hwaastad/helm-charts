@@ -1,8 +1,0 @@
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  labels:
-{{ include "gitea.labels.standard" . | indent 4 }}
-  name: tcp-{{ template "gitea.gitea.fullname" . }}-ssh
-data:
-  2222: default/{{ template "gitea.fullname" . }}:ssh

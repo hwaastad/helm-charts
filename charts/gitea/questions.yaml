@@ -48,7 +48,7 @@ questions:
   group: Database
 - variable: service.sshEnable
   type: boolean
-  default: false
+  default: true
   label: Enable SSH
   group: gitea
   show_subquestion_if: true
@@ -80,6 +80,53 @@ questions:
   label: Root URL
   description: Full public URL for the gitea server
   group: gitea
+- variable: service.gitea.serviceDisableRegistration
+  type: boolean
+  default: false
+  label: Disable Registration
+  group: gitea
+- variable: service.gitea.securitySecretKey
+  type: password
+  default: changeme
+  label: Gitea secret key
+  required: true
+  group: gitea
+- variable: service.gitea.securityInternalToken
+  type: password
+  default: mysecrettoken
+  label: Gitea secret token
+  required: true
+  group: gitea
+- variable: service.gitea.logLevel
+  type: enum
+  label: LogLevel
+  description: System log level
+  default: Trace
+  options: ["Trace", "Info", "Warn", "Error", "Fatal"]
+  group: gitea
+- variable: service.gitea.mailerEnabled
+  type: boolean
+  default: false
+  label: Enable email
+  show_subquestion_if: true
+  group: gitea
+  subquestions:
+  - variable: service.gitea.mailerHost
+    type: string
+    default: localhost
+    description: "Email relay host (smtp.example.com:25)"
+    required: true
+    label: Mailrelay host
+    group: gitea
+  - variable: service.gitea.mailerFrom
+    type: string
+    default: gitea@telenor.com
+    required: true
+    label: Mail From
+  - variable: service.gitea.mailerSkipVerify
+    type: boolean
+    default: false
+    label: Skip Verify
 - variable: persistence.enabled
   type: boolean
   default: true
