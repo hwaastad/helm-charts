@@ -46,12 +46,12 @@ questions:
   label: Password
   description: Postgres password
   group: Database
-- variable: service.sshEnable
+- variable: service.sshDisable
   type: boolean
   default: true
-  label: Enable SSH
+  label: Disable SSH
   group: gitea
-  show_subquestion_if: true
+  show_subquestion_if: false
   subquestions:
   - variable: service.sshDomain
     default: gitea.example.com

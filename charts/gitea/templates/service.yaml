@@ -14,7 +14,7 @@ spec:
     - name: {{ default "gitea" .Values.service.nameOverride }}-http
       port: {{ .Values.service.httpPort | int }}
       targetPort: {{ default "gitea" .Values.service.nameOverride }}-http
-{{- if .Values.service.sshEnable }}
+{{- if not .Values.service.sshDisable }}
     - name: {{ default "gitea" .Values.service.nameOverride }}-ssh
       port: {{ .Values.service.sshPort | int }}
       targetPort: {{ default "gitea" .Values.service.nameOverride }}-ssh

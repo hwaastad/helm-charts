@@ -30,7 +30,7 @@ service:
   httpNodePort:
 
   ## ssh enable/disable
-  sshEnable: true
+  sshDisable: true
 
   ## SSH listen port.
   ##

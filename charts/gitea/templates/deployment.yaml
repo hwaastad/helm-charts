@@ -39,7 +39,7 @@ spec:
         ports:
         - name: {{ default "gitea" .Values.service.nameOverride }}-http
           containerPort: {{ .Values.service.httpPort | int }}
-        {{- if .Values.service.sshEnable }}
+        {{- if not .Values.service.sshDisable }}
         - name: {{ default "gitea" .Values.service.nameOverride }}-ssh
           containerPort: {{ .Values.service.sshPort | int }}
         {{- end }}
