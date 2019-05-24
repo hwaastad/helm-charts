@@ -14,11 +14,13 @@ questions:
     description: "Default images for gitea SCM"
     type: string
     label: Tag
+    group: "Container Images"
   - variable: image.tag
     default: "1.8.1"
     description: "The image tag of gitea"
     type: string
     label: Image Tag For gitea Image
+    group: "Container Images"
 - variable: postgresql.install
   type: boolean
   default: true
@@ -123,10 +125,12 @@ questions:
     default: gitea@telenor.com
     required: true
     label: Mail From
+    group: gitea
   - variable: service.gitea.mailerSkipVerify
     type: boolean
     default: false
     label: Skip Verify
+    group: gitea
 - variable: persistence.enabled
   type: boolean
   default: true
@@ -144,6 +148,7 @@ questions:
     default: 1Gi
     label: Size
     description: Size of PVC
+    group: Persistence
 - variable: postgresql.persistence.enabled
   type: boolean
   default: true
@@ -174,3 +179,4 @@ questions:
     default: ""
     label: Secret name
     description: Name of Certificate secret
+    group: Ingress
