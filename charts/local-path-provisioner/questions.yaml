@@ -1,6 +1,24 @@
 categories:
 - storage
 questions:
+- variable: defaultImage
+  default: true
+  description: "Use default Telegraf image"
+  label: Use Default Image
+  type: boolean
+  show_subquestion_if: false
+  group: "Container Images"
+  subquestions:
+  - variable: image.repository
+    default: rancher/local-path-provisioner
+    description: "Default images for local-path-provisioner"
+    type: string
+    label: API Server Image
+  - variable: image.tag
+    default: "v0.0.9"
+    description: "The image tag of local-path-provisioner image"
+    type: string
+    label: Image Tag For local-path-provisioner Image
 - variable: storage.path
   description: "Path on node for storage"
   label: Storage Path

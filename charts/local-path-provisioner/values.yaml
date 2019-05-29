@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: rancher/local-path-provisioner
-  tag: v0.0.8
+  tag: v0.0.9
   pullPolicy: IfNotPresent
 
 nameOverride: ""
