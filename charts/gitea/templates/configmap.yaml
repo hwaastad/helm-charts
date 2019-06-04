@@ -9,6 +9,11 @@ data:
     APP_NAME = {{ .Values.service.gitea.appName }}
     RUN_MODE = {{ .Values.service.gitea.runMode }}
 
+    [attachment]
+    ENABLED = true
+    ALLOWED_TYPES = */*
+    MAX_SIZE = 64
+
     [repository.upload]
     ENABLED = {{ .Values.service.gitea.repositoryUploadEnabled }}
     ALLOWED_TYPES = {{ .Values.service.gitea.repositoryUploadAllowedTypes }}
