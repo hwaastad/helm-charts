@@ -3,10 +3,7 @@ kind: Deployment
 metadata:
   name: {{ template "clair.fullname" . }}
   labels:
-    heritage: {{ .Release.Service | quote }}
-    release: {{ .Release.Name | quote }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    app: {{ template "clair.fullname" . }}
+{{ include "clair.labels.standard" . | indent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -33,7 +30,7 @@ spec:
       - name: pg-ready-wait
         image: postgres:11.3
         command: [ "sh", "-c",
-          "until pg_isready -h {{ .Values.config.postgresServiceName }} -p 5432;
+          "until pg_isready -h { .Values.config.postgresServiceName }} -p 5432;
           do echo waiting for database; sleep 1; done;"]
       containers:
       - name: {{ .Chart.Name }}

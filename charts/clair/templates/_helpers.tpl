@@ -34,7 +34,7 @@ Create chart name and version as used by the chart label.
 {{/*
 Common labels
 */}}
-{{- define "clair.labels" -}}
+{{- define "clair.labels.standard" -}}
 app.kubernetes.io/name: {{ include "clair.name" . }}
 helm.sh/chart: {{ include "clair.chart" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
