@@ -5,8 +5,8 @@ replicaCount: 1
 logLevel: info
 insecureTls: false
 image:
-  repository: clair-local
-  tag: latest
+  repository: quay.io/coreos/clair
+  tag: v2.0.8
   pullPolicy: Never
 service:
   type: ClusterIP
