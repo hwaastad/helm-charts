@@ -7,7 +7,7 @@ insecureTls: false
 image:
   repository: quay.io/coreos/clair
   tag: v2.0.8
-  pullPolicy: Never
+  pullPolicy: IfNotPresent
 service:
   type: ClusterIP
   internalApiPort: 6060
