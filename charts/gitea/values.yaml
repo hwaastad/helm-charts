@@ -78,11 +78,11 @@ service:
     ## File types that are allowed to be uploaded, e.g. image/jpeg|image/png.
     ## Leave empty means allow any file typ
     ##
-    repositoryUploadAllowedTypes:
+    repositoryUploadAllowedTypes: */*
 
     ## Maximum size of each file in MB.
     ##
-    repositoryUploadMaxFileSize: 3
+    repositoryUploadMaxFileSize: 64
 
     ## Maximum number of files per upload.
     ##
