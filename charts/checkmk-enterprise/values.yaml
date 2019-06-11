@@ -5,8 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: reg-proxy.daxdigital.net/overvaakning/checkmk
-  tag: 2.0-develop
+  repository: repo.daxdigital.net/overvaakning/checkmk
+  tag: v2.1-linux-amd64
   pullPolicy: Always
   pullSecret: maxdigital
 
@@ -14,7 +14,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 service:
-  #nameOverride: 
+  #nameOverride:
   type: ClusterIP
   port: 5000
 
