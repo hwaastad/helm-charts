@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: reg-proxy.daxdigital.net/snow/mid-server
+  repository: repo.daxdigital.net/snow/mid-server
   tag: madrid
   pullPolicy: Always
   pullSecret: whatever
