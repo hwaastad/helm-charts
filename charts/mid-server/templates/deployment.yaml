@@ -70,6 +70,10 @@ spec:
         - containerPort: {{ .Values.service.port }}
           name: {{ .Values.service.name }}
           protocol: {{ .Values.service.protocol }}
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/agent/bin/mid.sh","stop"]
         resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
