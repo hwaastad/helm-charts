@@ -76,6 +76,7 @@ spec:
               command: ["/agent/bin/mid.sh","stop"]
         resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      terminationGracePeriodSeconds: 300
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
