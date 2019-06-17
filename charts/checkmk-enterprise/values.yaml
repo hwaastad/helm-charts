@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: repo.daxdigital.net/overvaakning/checkmk
-  tag: v2.1-linux-amd64
+  tag: v2.1-1.5.0p18-linux-amd64
   pullPolicy: Always
   pullSecret: maxdigital
 
