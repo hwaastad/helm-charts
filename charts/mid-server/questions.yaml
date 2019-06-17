@@ -2,7 +2,7 @@ categories:
 - servicenow
 questions:
 - variable: persistence.enabled
-  description: "Layer2 Load Balancing"
+  description: "Persistent storage for mid source"
   label: Persistence enabled
   type: boolean
   default: false
@@ -44,7 +44,7 @@ questions:
   label: CPU
   group: "Resources"
 - variable: servicenow.url
-  default: "https://mymid.url"
+  default: "https://my-instance.service-now.com"
   required: true
   description: "Servicenow URL"
   type: string
@@ -74,7 +74,7 @@ questions:
 - variable: image.pullSecret
   default: "maxdigital"
   required: true
-  description: "Registry secret to use"
+  description: "Secret name for docker registry"
   type: string
   label: Registry
   group: Registry
