@@ -16,7 +16,7 @@ questions:
     type: string
     label: CheckMK Server Image
   - variable: image.tag
-    default: "2.0-develop"
+    default: "v2.1-1.5.0p18-linux-amd64"
     description: "The image tag of CheckMK"
     type: string
     label: Image Tag For CheckMK Image
