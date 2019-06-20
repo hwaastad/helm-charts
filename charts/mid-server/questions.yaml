@@ -1,6 +1,24 @@
 categories:
 - servicenow
 questions:
+- variable: defaultImage
+  default: true
+  description: "Use default Image"
+  label: "Use Default Image"
+  type: boolean
+  show_subquestion_if: false
+  group: "Container Images"
+  subquestions:
+  - variable: image.repository
+    default: repo.daxdigital.net/snow/mid-server
+    description: "Default images for Servicenow MID server"
+    type: string
+    label: "Image"
+  - variable: image.tag
+    default: "v1.0.2"
+    description: "The image tag of Servicenow MID server"
+    type: string
+    label: "Image Tag"
 - variable: persistence.enabled
   description: "Persistent storage for mid source"
   label: Persistence enabled
