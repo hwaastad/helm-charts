@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: repo.daxdigital.net/snow/mid-server
-  tag: madrid
+  tag: v1.0.1
   pullPolicy: Always
   pullSecret: whatever
 
