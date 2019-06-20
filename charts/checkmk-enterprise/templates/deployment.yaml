@@ -68,11 +68,11 @@ spec:
         livenessProbe:
           httpGet:
             path: /
-            port: http
+            port: {{ default "checkmk-enterprise" .Values.service.nameOverride }}-http
         readinessProbe:
           httpGet:
             path: /
-            port: http
+            port: {{ default "checkmk-enterprise" .Values.service.nameOverride }}-http
         volumeMounts:
           - mountPath: /omd/sites
             name: storage
