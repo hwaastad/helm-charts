@@ -14,7 +14,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 service:
-  #nameOverride:
+  nameOverride: checkmk
   type: ClusterIP
   port: 5000
 
