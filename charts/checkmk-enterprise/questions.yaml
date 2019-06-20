@@ -11,7 +11,7 @@ questions:
   group: "Container Images"
   subquestions:
   - variable: image.repository
-    default: reg-proxy.daxdigital.net/overvaakning/checkmk
+    default: repo.daxdigital.net/overvaakning/checkmk
     description: "Default CheckMK image"
     type: string
     label: CheckMK Server Image
