@@ -7,6 +7,7 @@ metadata:
   labels:
 {{ include "mid-server.labels.standard" . | indent 4 }}
 spec:
+  externalTrafficPolicy: Local
   {{if eq .Values.service.type "ClusterIP" }}
   clusterIP: None
   {{end}}
