@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: {{ include "mid-server.fullname" . }}
   annotations:
+    metallb.universe.tf/allow-shared-ip: snmp
   labels:
 {{ include "mid-server.labels.standard" . | indent 4 }}
 spec:
@@ -15,3 +16,4 @@ spec:
   selector:
     app.kubernetes.io/name: {{ include "mid-server.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
+  type: {{ .Values.service.type }}
