@@ -127,3 +127,8 @@ questions:
       default: "ClusterIP"
       label: "Ingress/Loadbalancer"
       description: "Use ingress or loadbalancing"
+    - variable: service.servicegroup
+      type: string
+      default: mid-servers
+      label: "Shared IP Group"
+      description: "May share IP with services in this group"

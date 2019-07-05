@@ -19,6 +19,7 @@ service:
   port: 162
   protocol: UDP
   name: "snmp-trap"
+  servicegroup: mid-servers
 
 servicenow:
   url: "https://mymid.url"

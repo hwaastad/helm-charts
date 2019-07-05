@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ include "mid-server.fullname" . }}
   annotations:
-    metallb.universe.tf/allow-shared-ip: snmp
+    metallb.universe.tf/allow-shared-ip: {{ .Values.service.servicegroup }}
   labels:
 {{ include "mid-server.labels.standard" . | indent 4 }}
 spec:
