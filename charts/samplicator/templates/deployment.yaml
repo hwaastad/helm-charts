@@ -8,12 +8,12 @@ spec:
   selector:
     matchLabels:
       app: {{ template "samplicator.name" . }}
-      component: speaker
       release: {{ .Release.Name | quote }}
   template:
     metadata:
       labels:
-{{ include "samplicator.labels.standard" . | indent 8 }}
+        app: {{ template "samplicator.name" . }}
+        release: {{ .Release.Name | quote }}
     spec:
       terminationGracePeriodSeconds: 0
     {{- if .Values.affinity.enabled }}
