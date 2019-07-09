@@ -40,6 +40,8 @@ spec:
           value: {{ .Values.relay.destination | quote }}
         - name: DESTINATION_PORT
           value: {{ .Values.relay.port | quote }}
+        - name: SINK_PORT
+          value: {{ .Values.service.port }}
         - name: DEBUG
           value: {{ .Values.debug | quote }}
         ports:
