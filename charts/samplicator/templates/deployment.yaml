@@ -16,7 +16,6 @@ spec:
 {{ include "samplicator.labels.standard" . | indent 8 }}
     spec:
       terminationGracePeriodSeconds: 0
-      hostNetwork: true
     {{- if .Values.affinity.enabled }}
       affinity:
         nodeAffinity:
