@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: {{ template "samplicator.fullname" . }}-speaker
@@ -38,11 +38,11 @@ spec:
             fieldRef:
               fieldPath: spec.nodeName
         - name: DESTINATION_HOST
-          value: {{ .Values.relay.destination }}
+          value: {{ .Values.relay.destination | quote }}
         - name: DESTINATION_PORT
-          value: {{ .Values.relay.port }}
+          value: {{ .Values.relay.port | quote }}
         - name: DEBUG
-          value: {{ .Values.debug }}
+          value: {{ .Values.debug | quote }}
         ports:
         - name: sink-port
           containerPort: {{ .Values.service.port }}
