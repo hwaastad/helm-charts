@@ -51,7 +51,7 @@ questions:
   default: 162
   label: HostPort
   group: Ports and Destination
-- variable: relay.host
+- variable: relay.destination
   type: hostname
   default: localhost
   label: Destination Host
