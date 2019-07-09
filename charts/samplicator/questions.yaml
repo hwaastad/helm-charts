@@ -1,0 +1,63 @@
+categories:
+- monitoring
+- udp relay
+questions:
+- variable: defaultImage
+  default: true
+  description: "Use default Samplicator image"
+  label: Use Default Image
+  type: boolean
+  show_subquestion_if: false
+  group: "Container Images"
+  subquestions:
+  - variable: image.repository
+    default: repo.daxdigitial.net/server/samplicator
+    description: "Default Samplicator image"
+    type: string
+    label: Samplicator Server Image
+  - variable: image.tag
+    default: "master-linux-amd64"
+    description: "The image tag of Samplicator"
+    type: string
+    label: Image Tag For Samplicator Image
+- variable: image.pullSecret
+  default: "maxdigital"
+  required: true
+  description: "Registry secret to use"
+  type: string
+  label: Registry
+  group: Registry
+- variable: affinity.enabled
+  group: "Affinity"
+  type: boolean
+  default: false
+  label: Enable Affinity
+  description: Enable Affinity rules
+  show_subquestion_if: true
+  subquestions:
+  - variable: affinity.label
+    type: string
+    default: relay
+    description: Label to use for affinity
+    label: Required Node label
+    required: true
+- variable: service.port
+  type: int
+  default: 1162
+  label: Container port
+  group: Ports and Destination
+- variable: service.hostPort
+  type: int
+  default: 162
+  label: HostPort
+  group: Ports and Destination
+- variable: relay.host
+  type: hostname
+  default: localhost
+  label: Destination Host
+  group: Ports and Destination
+- variable: relay.port
+  type: int
+  default: 1162
+  label: Destination Port
+  group: Ports and Destination
