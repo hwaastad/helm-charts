@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ template "samplicator.fullname" . }}-speaker
+  labels:
+{{ include "samplicator.labels.standard" . | indent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "samplicator.name" . }}
+      component: speaker
+      release: {{ .Release.Name | quote }}
+  template:
+    metadata:
+      labels:
+{{ include "samplicator.labels.standard" . | indent 8 }}
+    spec:
+      terminationGracePeriodSeconds: 0
+      hostNetwork: true
+    {{- if .Values.affinity.enabled }}
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: {{ .Values.affinity.label | quote }}
+                operator: Exists
+    {{- end }}
+      imagePullSecrets:
+      - name: {{ .Values.image.pullSecret }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        - name: SAMPLICATOR_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: DESTINATION_HOST
+          value: {{ .Values.relay.destination }}
+        - name: DESTINATION_PORT
+          value: {{ .Values.relay.port }}
+        - name: DEBUG
+          value: {{ .Values.debug }}
+        ports:
+        - name: sink-port
+          containerPort: {{ .Values.service.port }}
+          protocol: UDP
+          hostPort: {{ .Values.service.hostPort }}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
