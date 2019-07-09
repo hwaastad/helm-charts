@@ -6,7 +6,7 @@ replicaCount: 1
 
 debug: 10
 image:
-  repository: repo.daxdigitial.net/server/samplicator
+  repository: repo.daxdigital.net/server/samplicator
   tag: master-linux-amd64
   pullPolicy: IfNotPresent
   pullSecret: maxdigital

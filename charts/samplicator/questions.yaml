@@ -11,7 +11,7 @@ questions:
   group: "Container Images"
   subquestions:
   - variable: image.repository
-    default: repo.daxdigitial.net/server/samplicator
+    default: repo.daxdigital.net/server/samplicator
     description: "Default Samplicator image"
     type: string
     label: Samplicator Server Image
