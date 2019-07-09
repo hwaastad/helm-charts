@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: {{ template "samplicator.fullname" . }}-speaker
+  name: {{ template "samplicator.fullname" . }}
   labels:
 {{ include "samplicator.labels.standard" . | indent 4 }}
 spec:
