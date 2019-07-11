@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ template "snmp-proxy.fullname" . }}
+  labels:
+{{ include "snmp-proxy.labels.standard" . | indent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "snmp-proxy.name" . }}
+      release: {{ .Release.Name | quote }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "snmp-proxy.name" . }}
+        release: {{ .Release.Name | quote }}
+    spec:
+      terminationGracePeriodSeconds: 0
+    {{- if .Values.affinity.enabled }}
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: {{ .Values.affinity.label | quote }}
+                operator: Exists
+    {{- end }}
+      imagePullSecrets:
+      - name: {{ .Values.image.pullSecret }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        - name: SNMP_PROXY_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: TRAPRECEIVER
+          value: {{ .Values.relay.destination | quote }}
+        ports:
+        - name: snmp-proxy-trap
+          containerPort: {{ .Values.service.port }}
+          protocol: UDP
+          hostPort: {{ .Values.service.port }}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
