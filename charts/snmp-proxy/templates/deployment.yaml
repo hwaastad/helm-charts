@@ -36,8 +36,13 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
-        - name: TRAPRECEIVER
+        - name: TRAP_RECEIVER
           value: {{ .Values.relay.destination | quote }}
+        - name: TRAP_COMMUNITY
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "snmp-proxy.fullname" . }}
+              key: trap-community
         ports:
         - name: snmp-proxy-trap
           containerPort: {{ .Values.service.port }}

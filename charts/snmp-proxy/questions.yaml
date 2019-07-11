@@ -51,3 +51,8 @@ questions:
   default: localhost
   label: Destination Host
   group: Ports and Destination
+- variable: snmptrap.community
+  type: password
+  default: public
+  label: Trap Community
+  group: SNMP
