@@ -49,6 +49,7 @@ questions:
 - variable: relay.destination
   type: hostname
   default: localhost
+  description: "hostname[:port]( port default 162)"
   label: Destination Host
   group: Ports and Destination
 - variable: snmptrap.community
