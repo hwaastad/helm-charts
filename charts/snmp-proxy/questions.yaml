@@ -16,7 +16,7 @@ questions:
     type: string
     label: Snmp-Proxy Server Image
   - variable: image.tag
-    default: "master-linux-amd64"
+    default: "v1.0"
     description: "The image tag of Snmp-Proxy"
     type: string
     label: Image Tag For Snmp-Proxy Image

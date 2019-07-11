@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: repo.daxdigital.net/server/snmp-proxy
-  tag: latest
+  tag: v1.0
   pullPolicy: IfNotPresent
   pullSecret: maxdigital
 
