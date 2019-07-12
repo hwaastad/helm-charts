@@ -11,7 +11,7 @@ spec:
   clusterIP: None
   {{end}}
   ports:
-    - port: 162
+    - port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.name }}
       protocol: {{ .Values.service.protocol }}
       name: {{ .Values.service.name }}
