@@ -25,6 +25,7 @@ questions:
   label: Image PullPolicy
   options: ["Always","IfNotPresent"]
   default: IfNotPresent
+  group: "Container Images"
 - variable: image.pullSecret
   default: "maxdigital"
   required: true
