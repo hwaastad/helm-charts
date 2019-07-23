@@ -20,6 +20,11 @@ questions:
     description: "The image tag of Snmp-Proxy"
     type: string
     label: Image Tag For Snmp-Proxy Image
+- variable: image.pullPolicy
+  type: enum
+  label: Image PullPolicy
+  options: ["Always","IfNotPresent"]
+  default: IfNotPresent
 - variable: image.pullSecret
   default: "maxdigital"
   required: true
