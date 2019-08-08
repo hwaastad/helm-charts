@@ -44,6 +44,10 @@ persistence:
 
 
 resources:
+  memory:
+    enabled: false
+  cpu:
+    enabled: false
   #requests:
   #  memory: 1024Mi
   #  cpu: 1000m
