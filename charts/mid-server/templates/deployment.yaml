@@ -75,7 +75,20 @@ spec:
             exec:
               command: ["/agent/bin/mid.sh","stop"]
         resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            requests:
+            {{- if .Values.resources.memory.enabled }}
+              memory: {{ .Values.resources.requests.memory }}
+            {{- end }}
+            {{- if .Values.resources.cpu.enabled }}
+              cpu: {{ .Values.resources.requests.cpu }}
+            {{- end }}
+            limits:
+            {{- if .Values.resources.memory.enabled }}
+              memory: {{ .Values.resources.limits.memory }}
+            {{- end }}
+            {{- if .Values.resources.cpu.enabled }}
+              cpu: {{ .Values.resources.limits.cpu }}
+            {{- end }}
       terminationGracePeriodSeconds: 300
       {{- with .Values.nodeSelector }}
       nodeSelector:
