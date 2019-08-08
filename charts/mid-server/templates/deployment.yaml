@@ -89,7 +89,6 @@ spec:
             {{- if .Values.resources.cpu.enabled }}
               cpu: {{ .Values.resources.limits.cpu }}
             {{- end }}
-            #{{- toYaml .Values.resources | nindent 12 }}
       terminationGracePeriodSeconds: 300
       {{- with .Values.nodeSelector }}
       nodeSelector:
