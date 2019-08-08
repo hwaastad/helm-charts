@@ -64,6 +64,7 @@ questions:
   default: false
   group: "Resources"
   show_subquestion_if: true
+  subquestions:
     - variable: resources.requests.cpu
       default: "1000m"
       description: "CPU Reservation"
