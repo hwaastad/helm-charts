@@ -21,7 +21,7 @@ spec:
         app.kubernetes.io/name: {{ include "mid-server.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-{{- if eq .Values.podAntiAffinity "hard" }}
+      {{- if eq .Values.podAntiAffinity "hard" }}
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -29,7 +29,7 @@ spec:
               labelSelector:
                 matchLabels:
                   app.kubernetes.io/name: {{ template "mid-server.name" . }}
-{{- else if eq .Values.podAntiAffinity "soft" }}
+      {{- else if eq .Values.podAntiAffinity "soft" }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -39,7 +39,7 @@ spec:
               labelSelector:
                 matchLabels:
                   app.kubernetes.io/name: {{ template "mid-server.name" . }}
-{{- end }}
+      {{- end }}
       imagePullSecrets:
       - name: {{ .Values.image.pullSecret }}
       containers:
@@ -105,19 +105,19 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
     {{- if .Values.persistence.enabled }}
-  volumeClaimTemplates:
-  - metadata:
-      name: {{ .Values.persistence.existingClaim | default (include "mid-server.fullname" .) }}
-    spec:
-      accessModes:
-      - {{ .Values.persistence.accessMode | quote }}
-      {{- if hasKey .Values.persistence "storageClass" }}
-        storageClassName: {{ .Values.persistence.storageClass | quote }}
-      {{- end }}
-        resources:
-          requests:
-            storage: {{ .Values.persistence.size | quote }}
-    {{- else }}
+volumeClaimTemplates:
+- metadata:
+    name: {{ .Values.persistence.existingClaim | default (include "mid-server.fullname" .) }}
+  spec:
+    accessModes:
+    - {{ .Values.persistence.accessMode | quote }}
+    {{- if hasKey .Values.persistence "storageClass" }}
+      storageClassName: {{ .Values.persistence.storageClass | quote }}
+    {{- end }}
+      resources:
+        requests:
+          storage: {{ .Values.persistence.size | quote }}
+  {{- else }}
       volumes:
       - name: work-vol
         emptyDir: {}

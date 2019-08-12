@@ -29,7 +29,7 @@ questions:
   subquestions:
     - variable: persistence.storageClass
       default: ""
-      description: "Loadbalancing IP range"
+      description: "Persistence storageclass"
       type: storageclass
       label: StorageClass
     - variable: persistence.size
