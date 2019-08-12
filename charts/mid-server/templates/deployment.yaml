@@ -117,8 +117,8 @@ volumeClaimTemplates:
       resources:
         requests:
           storage: {{ .Values.persistence.size | quote }}
-  {{- else }}
+      {{- else }}
       volumes:
-      - name: work-vol
+      - name: {{ include "mid-server.fullname" . }}-vol
         emptyDir: {}
-    {{- end }}
+      {{- end }}
