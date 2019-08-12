@@ -110,15 +110,15 @@ spec:
     {{- end }}
   {{- if .Values.persistence.enabled }}
   volumeClaimTemplates:
-    - metadata:
-        name: datadir
-      spec:
-        accessModes:
-          - {{ .Values.persistence.accessMode | quote }}
-            {{- if hasKey .Values.persistence "storageClass" }}
-            storageClassName: {{ .Values.persistence.storageClass | quote }}
-            {{- end }}
-            resources:
-              requests:
-                storage: {{ .Values.persistence.size | quote }}
+  - metadata:
+      name: datadir
+    spec:
+      accessModes:
+      - {{ .Values.persistence.accessMode | quote }}
+        {{- if hasKey .Values.persistence "storageClass" }}
+        storageClassName: {{ .Values.persistence.storageClass | quote }}
+        {{- end }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size | quote }}
   {{- end }}
