@@ -78,7 +78,6 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
-          value: {{ .Values.servicenow.name | quote }}
         - name: MEM_TOTAL_MB
           valueFrom:
             resourceFieldRef:
