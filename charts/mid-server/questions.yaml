@@ -84,13 +84,6 @@ questions:
   type: string
   label: URL
   group: "Servicenow Configuration"
-- variable: servicenow.name
-  default: "my-mid-name"
-  required: true
-  description: "Servicenow MID name"
-  type: string
-  label: MID name
-  group: "Servicenow Configuration"
 - variable: servicenow.username
   default: ""
   required: true
@@ -104,6 +97,13 @@ questions:
   description: "Servicenow API password"
   type: password
   label: Password
+  group: "Servicenow Configuration"
+- variable: replicaCount
+  default: 1
+  required: true
+  description: "Number of replicas"
+  type: int
+  label: Replicas
   group: "Servicenow Configuration"
 - variable: image.pullSecret
   default: "maxdigital"

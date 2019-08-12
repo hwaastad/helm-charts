@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "mid-server.fullname" . }}
   labels:
@@ -42,14 +42,13 @@ spec:
 {{- end }}
       imagePullSecrets:
       - name: {{ .Values.image.pullSecret }}
-      hostname: {{ .Values.servicenow.name }}
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         volumeMounts:
         - mountPath: /agent
-          name: work-vol
+          name: {{ include "mid-server.fullname" . }}-vol
         env:
         - name: SN_PASSWD
           valueFrom:
@@ -61,6 +60,9 @@ spec:
         - name: SN_USER
           value: {{ .Values.servicenow.username | quote }}
         - name: SN_MID_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
           value: {{ .Values.servicenow.name | quote }}
         - name: MEM_TOTAL_MB
           valueFrom:
@@ -102,11 +104,21 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+    {{- if .Values.persistence.enabled }}
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ .Values.persistence.existingClaim | default (include "mid-server.fullname" .) }}
+    spec:
+      accessModes:
+      - {{ .Values.persistence.accessMode | quote }}
+      {{- if hasKey .Values.persistence "storageClass" }}
+        storageClassName: {{ .Values.persistence.storageClass | quote }}
+      {{- end }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size | quote }}
+    {{- else }}
       volumes:
       - name: work-vol
-      {{- if .Values.persistence.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ .Values.persistence.existingClaim | default (include "mid-server.fullname" .) }}
-      {{- else }}
         emptyDir: {}
-      {{- end -}}
+    {{- end }}
