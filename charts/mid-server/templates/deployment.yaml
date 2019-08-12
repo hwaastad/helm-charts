@@ -64,20 +64,6 @@ spec:
         volumeMounts:
         - mountPath: /agent
           name: datadir
-        env:
-        - name: SN_PASSWD
-          valueFrom:
-            secretKeyRef:
-              name: {{ include "mid-server.fullname" . }}
-              key: servicenow-password
-        - name: SN_URL
-          value: {{ .Values.servicenow.url | quote }}
-        - name: SN_USER
-          value: {{ .Values.servicenow.username | quote }}
-        - name: MEM_TOTAL_MB
-          valueFrom:
-            resourceFieldRef:
-              resource: limits.memory
         ports:
         - containerPort: {{ .Values.service.port }}
           name: {{ .Values.service.name }}
