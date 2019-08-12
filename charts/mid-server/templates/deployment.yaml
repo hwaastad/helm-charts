@@ -104,10 +104,15 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- if .Values.persistence.enabled }}
+    {{- if not .Values.persistence.enabled }}
+      volumes:
+      - name: {{ include "mid-server.fullname" . }}-vol
+        emptyDir: {}
+    {{- end }}
+{{- if .Values.persistence.enabled }}
 volumeClaimTemplates:
 - metadata:
-    name: {{ .Values.persistence.existingClaim | default (include "mid-server.fullname" .) }}
+    name: {{ include "mid-server.fullname" . }}
   spec:
     accessModes:
     - {{ .Values.persistence.accessMode | quote }}
@@ -117,8 +122,4 @@ volumeClaimTemplates:
       resources:
         requests:
           storage: {{ .Values.persistence.size | quote }}
-    {{- else }}
-      volumes:
-      - name: {{ include "mid-server.fullname" . }}-vol
-        emptyDir: {}
-    {{- end }}
+{{- end }}
