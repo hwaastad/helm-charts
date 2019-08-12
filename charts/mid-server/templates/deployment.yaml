@@ -74,10 +74,6 @@ spec:
           value: {{ .Values.servicenow.url | quote }}
         - name: SN_USER
           value: {{ .Values.servicenow.username | quote }}
-        - name: SN_MID_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
         - name: MEM_TOTAL_MB
           valueFrom:
             resourceFieldRef:
