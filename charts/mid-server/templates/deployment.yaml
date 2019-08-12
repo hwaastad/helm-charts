@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+apiVersion: apps/v1beta2
 kind: StatefulSet
 metadata:
   name: {{ include "mid-server.fullname" . }}
@@ -46,6 +46,21 @@ spec:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources:
+          requests:
+          {{- if .Values.resources.memory.enabled }}
+            memory: {{ .Values.resources.requests.memory }}
+          {{- end }}
+          {{- if .Values.resources.cpu.enabled }}
+            cpu: {{ .Values.resources.requests.cpu }}
+          {{- end }}
+          limits:
+          {{- if .Values.resources.memory.enabled }}
+            memory: {{ .Values.resources.limits.memory }}
+          {{- end }}
+          {{- if .Values.resources.cpu.enabled }}
+            cpu: {{ .Values.resources.limits.cpu }}
+          {{- end }}
         volumeMounts:
         - mountPath: /agent
           name: {{ include "mid-server.fullname" . }}-vol
@@ -76,21 +91,6 @@ spec:
           preStop:
             exec:
               command: ["/agent/bin/mid.sh","stop"]
-        resources:
-          requests:
-          {{- if .Values.resources.memory.enabled }}
-            memory: {{ .Values.resources.requests.memory }}
-          {{- end }}
-          {{- if .Values.resources.cpu.enabled }}
-            cpu: {{ .Values.resources.requests.cpu }}
-          {{- end }}
-          limits:
-          {{- if .Values.resources.memory.enabled }}
-            memory: {{ .Values.resources.limits.memory }}
-          {{- end }}
-          {{- if .Values.resources.cpu.enabled }}
-            cpu: {{ .Values.resources.limits.cpu }}
-          {{- end }}
       terminationGracePeriodSeconds: 300
       {{- with .Values.nodeSelector }}
       nodeSelector:
