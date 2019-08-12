@@ -63,7 +63,7 @@ spec:
           {{- end }}
         volumeMounts:
         - mountPath: /agent
-          name: {{ include "mid-server.fullname" . }}-vol
+          name: datadir
         env:
         - name: SN_PASSWD
           valueFrom:
@@ -106,13 +106,13 @@ spec:
     {{- end }}
     {{- if not .Values.persistence.enabled }}
       volumes:
-      - name: {{ include "mid-server.fullname" . }}-vol
+      - name: datadir
         emptyDir: {}
     {{- end }}
 {{- if .Values.persistence.enabled }}
 volumeClaimTemplates:
 - metadata:
-    name: {{ include "mid-server.fullname" . }}
+    name: datadir
   spec:
     accessModes:
     - {{ .Values.persistence.accessMode | quote }}
