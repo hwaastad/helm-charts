@@ -77,8 +77,7 @@ spec:
         - name: SN_MID_NAME
           valueFrom:
             fieldRef:
-              apiVersion: v1
-              fieldPath: metadata.name
+              fieldPath: spec.podIP
         - name: MEM_TOTAL_MB
           valueFrom:
             resourceFieldRef:
