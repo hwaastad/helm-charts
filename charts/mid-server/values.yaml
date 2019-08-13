@@ -23,7 +23,6 @@ service:
 
 servicenow:
   url: "https://mymid.url"
-  name: "myname"
   username: "myusername"
   password: "mypass"
   proxy:
@@ -36,7 +35,7 @@ servicenow:
 
 persistence:
   enabled: false
-  storageClass: ""
+  #storageClass: "-"
   size: "5Gi"
   annotations: {}
   accessMode: ReadWriteOnce

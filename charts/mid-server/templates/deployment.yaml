@@ -1,27 +1,24 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: apps/v1beta2
+kind: StatefulSet
 metadata:
   name: {{ include "mid-server.fullname" . }}
   labels:
-{{ include "mid-server.labels.standard" . | indent 4 }}
+    {{ include "mid-server.labels.standard" . }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "mid-server.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
-  strategy:
-    rollingUpdate:
-      maxSurge: 0
-      maxUnavailable: 1
-    type: RollingUpdate
+  updateStrategy:
+    type: OnDelete
   template:
     metadata:
       labels:
         app.kubernetes.io/name: {{ include "mid-server.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-{{- if eq .Values.podAntiAffinity "hard" }}
+      {{- if eq .Values.podAntiAffinity "hard" }}
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -29,7 +26,7 @@ spec:
               labelSelector:
                 matchLabels:
                   app.kubernetes.io/name: {{ template "mid-server.name" . }}
-{{- else if eq .Values.podAntiAffinity "soft" }}
+      {{- else if eq .Values.podAntiAffinity "soft" }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -39,17 +36,31 @@ spec:
               labelSelector:
                 matchLabels:
                   app.kubernetes.io/name: {{ template "mid-server.name" . }}
-{{- end }}
+      {{- end }}
       imagePullSecrets:
       - name: {{ .Values.image.pullSecret }}
-      hostname: {{ .Values.servicenow.name }}
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources:
+          requests:
+          {{- if .Values.resources.memory.enabled }}
+            memory: {{ .Values.resources.requests.memory }}
+          {{- end }}
+          {{- if .Values.resources.cpu.enabled }}
+            cpu: {{ .Values.resources.requests.cpu }}
+          {{- end }}
+          limits:
+          {{- if .Values.resources.memory.enabled }}
+            memory: {{ .Values.resources.limits.memory }}
+          {{- end }}
+          {{- if .Values.resources.cpu.enabled }}
+            cpu: {{ .Values.resources.limits.cpu }}
+          {{- end }}
         volumeMounts:
         - mountPath: /agent
-          name: work-vol
+          name: datadir
         env:
         - name: SN_PASSWD
           valueFrom:
@@ -61,7 +72,9 @@ spec:
         - name: SN_USER
           value: {{ .Values.servicenow.username | quote }}
         - name: SN_MID_NAME
-          value: {{ .Values.servicenow.name | quote }}
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
         - name: MEM_TOTAL_MB
           valueFrom:
             resourceFieldRef:
@@ -74,21 +87,6 @@ spec:
           preStop:
             exec:
               command: ["/agent/bin/mid.sh","stop"]
-        resources:
-            requests:
-            {{- if .Values.resources.memory.enabled }}
-              memory: {{ .Values.resources.requests.memory }}
-            {{- end }}
-            {{- if .Values.resources.cpu.enabled }}
-              cpu: {{ .Values.resources.requests.cpu }}
-            {{- end }}
-            limits:
-            {{- if .Values.resources.memory.enabled }}
-              memory: {{ .Values.resources.limits.memory }}
-            {{- end }}
-            {{- if .Values.resources.cpu.enabled }}
-              cpu: {{ .Values.resources.limits.cpu }}
-            {{- end }}
       terminationGracePeriodSeconds: 300
       {{- with .Values.nodeSelector }}
       nodeSelector:
@@ -102,11 +100,26 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+    {{- if not .Values.persistence.enabled }}
       volumes:
-      - name: work-vol
-      {{- if .Values.persistence.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ .Values.persistence.existingClaim | default (include "mid-server.fullname" .) }}
-      {{- else }}
+      - name: datadir
         emptyDir: {}
-      {{- end -}}
+    {{- end }}
+  {{- if .Values.persistence.enabled }}
+  volumeClaimTemplates:
+  - metadata:
+      name: datadir
+    spec:
+      accessModes:
+      - {{ .Values.persistence.accessMode | quote }}
+        {{- if .Values.persistence.storageClass }}
+      {{- if (eq "-" .Values.persistence.storageClass) }}
+      storageClassName: ""
+      {{- else }}
+      storageClassName: "{{ .Values.persistence.storageClass }}"
+      {{- end }}
+      {{- end }}
+      resources:
+        requests:
+          storage: {{ .Values.persistence.size | quote }}
+  {{- end }}
