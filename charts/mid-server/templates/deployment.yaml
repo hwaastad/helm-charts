@@ -83,6 +83,27 @@ spec:
         - containerPort: {{ .Values.service.port }}
           name: {{ .Values.service.name }}
           protocol: {{ .Values.service.protocol }}
+        livenessProbe:
+          exec:
+            command:
+            - /agent/bin/mid.sh
+            - status
+          failureThreshold: 3
+          initialDelaySeconds: 60
+          periodSeconds: 2
+          successThreshold: 1
+          timeoutSeconds: 2
+        name: app
+        readinessProbe:
+          exec:
+            command:
+            - /agent/bin/mid.sh
+            - status
+          failureThreshold: 3
+          initialDelaySeconds: 60
+          periodSeconds: 2
+          successThreshold: 2
+          timeoutSeconds: 2
         lifecycle:
           preStop:
             exec:
