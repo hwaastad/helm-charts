@@ -4,7 +4,7 @@ metadata:
   name: {{ include "cluster-service.fullname" . }}
   labels:
 {{ include "cluster-service.labels" . | indent 4 }}
-    kubernetes.io/cluster-service: "true"
+    kubernetes.io/cluster-service: "false"
 spec:
   type: {{ .Values.service.type }}
   clusterIP: None
