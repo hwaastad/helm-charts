@@ -71,6 +71,13 @@ questions:
   type: password
   label: SNMP Community
   group: "Check_MK Configuration"
+- variable: replicaCount
+  default: 1
+  required: true
+  description: "Number of replicas"
+  type: int
+  label: Replicas
+  group: "Check_MK Configuration"
 - variable: servicenow.url
   default: "http://midip:midport/api/mid/em/jsonv2"
   required: true
