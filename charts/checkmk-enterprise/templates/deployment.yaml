@@ -10,6 +10,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: {{ include "checkmk-enterprise.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
+  serviceName: {{ include "checkmk-enterprise.fullname" . }}
   updateStrategy:
     type: OnDelete
   template:
