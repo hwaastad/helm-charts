@@ -87,7 +87,7 @@ spec:
           preStop:
             exec:
               command: ["/agent/bin/mid.sh","stop"]
-      terminationGracePeriodSeconds: 300
+      terminationGracePeriodSeconds: 0
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
