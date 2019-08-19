@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "checkmk-enterprise.fullname" . }}
   labels:
@@ -10,18 +10,16 @@ spec:
     matchLabels:
       app.kubernetes.io/name: {{ include "checkmk-enterprise.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
-  strategy:
-    rollingUpdate:
-      maxSurge: 0
-      maxUnavailable: 1
-    type: RollingUpdate
+  serviceName: {{ include "checkmk-enterprise.fullname" . }}
+  updateStrategy:
+    type: OnDelete
   template:
     metadata:
       labels:
         app.kubernetes.io/name: {{ include "checkmk-enterprise.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-{{- if eq .Values.podAntiAffinity "hard" }}
+      {{- if eq .Values.podAntiAffinity "hard" }}
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -29,7 +27,7 @@ spec:
             labelSelector:
               matchLabels:
                 app.kubernetes.io/name: {{ template "checkmk-enterprise.name" . }}
-{{- else if eq .Values.podAntiAffinity "soft" }}
+      {{- else if eq .Values.podAntiAffinity "soft" }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -39,7 +37,7 @@ spec:
               labelSelector:
                 matchLabels:
                   app.kubernetes.io/name: {{ template "checkmk-enterprise.name" . }}
-{{- end }}
+      {{- end }}
       imagePullSecrets:
       - name: {{ .Values.image.pullSecret }}
       initContainers:
@@ -103,6 +101,7 @@ spec:
           value: {{ .Values.servicenow.username | quote }}
         resources:
           {{- toYaml .Values.resources | nindent 10 }}
+      terminationGracePeriodSeconds: 0
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -111,11 +110,26 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+      {{- if not .Values.persistence.enabled }}
       volumes:
       - name: storage
-      {{- if .Values.persistence.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ .Values.persistence.existingClaim | default (include "checkmk-enterprise.fullname" .) }}
-      {{- else }}
         emptyDir: {}
-      {{- end -}}
+    {{- end }}
+{{- if .Values.persistence.enabled }}
+  volumeClaimTemplates:
+  - metadata:
+      name: storage
+    spec:
+      accessModes:
+      - {{ .Values.persistence.accessMode | quote }}
+        {{- if .Values.persistence.storageClass }}
+      {{- if (eq "-" .Values.persistence.storageClass) }}
+      storageClassName: ""
+      {{- else }}
+      storageClassName: "{{ .Values.persistence.storageClass }}"
+      {{- end }}
+      {{- end }}
+      resources:
+        requests:
+          storage: {{ .Values.persistence.size | quote }}
+  {{- end }}

@@ -10,6 +10,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: {{ include "mid-server.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
+  serviceName: {{ include "mid-server.fullname" . }}
   updateStrategy:
     type: OnDelete
   template:
@@ -87,7 +88,7 @@ spec:
           preStop:
             exec:
               command: ["/agent/bin/mid.sh","stop"]
-      terminationGracePeriodSeconds: 300
+      terminationGracePeriodSeconds: 0
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
