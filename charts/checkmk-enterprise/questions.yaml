@@ -38,18 +38,46 @@ questions:
       description: "PVC size"
       type: string
       label: PVC size
-- variable: resources.requests.memory
-  default: "1024Mi"
-  description: "Memory limit"
-  type: string
-  label: Memory
+- variable: resources.memory.enabled
+  description: "Enable Memory Scheduling"
+  type: boolean
+  label: Memory Scheduling
+  default: false
   group: "Resources"
-- variable: resources.requests.cpu
-  default: "1000m"
-  description: "CPU limit"
-  type: string
-  label: CPU
+  show_subquestion_if: true
+  subquestions:
+    - variable: resources.requests.memory
+      default: "1024Mi"
+      description: "Memory Reservation"
+      type: string
+      label: Memory
+      group: "Resources"
+    - variable: resources.limits.memory
+      default: "1024Mi"
+      description: "Memory Limit"
+      type: string
+      label: Memory
+      group: "Resources"
+- variable: resources.cpu.enabled
+  description: "Enable CPU Scheduling"
+  type: boolean
+  label: CPU Scheduling
+  default: false
   group: "Resources"
+  show_subquestion_if: true
+  subquestions:
+    - variable: resources.requests.cpu
+      default: "1000m"
+      description: "CPU Reservation"
+      type: string
+      label: CPU
+      group: "Resources"
+    - variable: resources.limits.cpu
+      default: "1000m"
+      description: "CPU Limit"
+      type: string
+      label: CPU
+      group: "Resources"
 - variable: checkmkconf.password
   default: "test123"
   required: true

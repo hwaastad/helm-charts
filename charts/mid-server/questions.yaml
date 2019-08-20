@@ -165,7 +165,6 @@ questions:
       default: mid-servers
       label: "Shared IP Group"
       description: "May share IP with services in this group"
-
 - variable: service.event.enabled
   description: "Expose Event port for collection"
   label: Expose event port
