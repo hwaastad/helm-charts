@@ -19,8 +19,16 @@ spec:
         app.kubernetes.io/name: {{ include "mid-server.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-      {{- if eq .Values.podAntiAffinity "hard" }}
       affinity:
+      {{- if .Values.nodeAffinity.enabled }}
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: {{ .Values.nodeAffinity.label | quote }}
+                operator: Exists
+      {{- end }}
+      {{- if eq .Values.podAntiAffinity "hard" }}
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - topologyKey: "kubernetes.io/hostname"
@@ -28,7 +36,6 @@ spec:
                 matchLabels:
                   app.kubernetes.io/name: {{ template "mid-server.name" . }}
       {{- else if eq .Values.podAntiAffinity "soft" }}
-      affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
           - weight: 1
@@ -81,9 +88,19 @@ spec:
             resourceFieldRef:
               resource: limits.memory
         ports:
-        - containerPort: {{ .Values.service.port }}
-          name: {{ .Values.service.name }}
-          protocol: {{ .Values.service.protocol }}
+        {{- if .Values.service.snmptrap.enabled }}
+        - containerPort: {{ .Values.service.snmptrap.containerPort }}
+          {{- if eq .Values.service.snmptrap.type "HostPort" }}
+          hostPort: {{ .Values.service.snmptrap.port }}
+          {{- end }}
+          name: {{ .Values.service.snmptrap.name }}
+          protocol: {{ .Values.service.snmptrap.protocol }}
+        {{- end }}
+        {{- if .Values.service.event.enabled }}
+        - containerPort: {{ .Values.service.event.containerPort }}
+          name: {{ .Values.service.event.name }}
+          protocol: {{ .Values.service.event.protocol }}
+        {{- end }}
         lifecycle:
           preStop:
             exec:

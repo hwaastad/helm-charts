@@ -14,12 +14,22 @@ nameOverride: ""
 fullnameOverride: ""
 
 service:
-  enabled: false
-  type: ClusterIP
-  port: 1162
-  protocol: UDP
-  name: "snmp-trap"
-  servicegroup: mid-servers
+  snmptrap:
+    enabled: false
+    type: HostPort
+    port: 162
+    containerPort: 1162
+    protocol: UDP
+    name: "snmp-trap"
+    servicegroup: mid-servers
+  event:
+    enabled: false
+    type: ClusterIP
+    port: 8097
+    containerPort: 8097
+    protocol: TCP
+    name: "event-receiver"
+    servicegroup: mid-servers
 
 servicenow:
   url: "https://mymid.url"
@@ -69,3 +79,7 @@ nodeSelector: {}
 tolerations: []
 
 podAntiAffinity: soft
+
+nodeAffinity:
+  enabled: false
+  label: traphandler

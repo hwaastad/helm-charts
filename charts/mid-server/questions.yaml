@@ -112,6 +112,18 @@ questions:
   type: string
   label: Registry
   group: Registry
+- variable: nodeAffinity.enabled
+  description: "Required node label"
+  label: Node label
+  type: boolean
+  default: false
+  group: "Affinity"
+  show_subquestion_if: true
+  subquestions:
+    - variable: nodeAffinity.label
+      default: "traphandler"
+      type: string
+      label: Node Label
 - variable: podAntiAffinity
   description: "Hard: required on scheduling, soft: preferred on scheduling"
   label: Pod Anti Affinity
@@ -119,31 +131,66 @@ questions:
   default: soft
   group: "Affinity"
   options: ["soft","hard"]
-- variable: service.enabled
-  description: "Expose serviceport"
-  label: Expose port
+- variable: service.snmptrap.enabled
+  description: "Expose SNMP Trap collection"
+  label: Expose SNMP port
   type: boolean
   default: false
   group: "Service Ports"
   show_subquestion_if: true
   subquestions:
-    - variable: service.port
+    - variable: service.snmptrap.port
+      default: 162
+      type: int
+      label: Exposed Port Number
+      description: "The port exposed on HostPort"
+    - variable: service.snmptrap.containerPort
       default: 1162
       type: int
-      label: Port Number
-    - variable: service.protocol
+      label: Container Port Number
+    - variable: service.snmptrap.protocol
       default: "UDP"
       options: ["UDP","TCP"]
       type: enum
       label: Protocol
-    - variable: service.type
+    - variable: service.snmptrap.type
+      default: ClusterIP
+      type: enum
+      options: ["ClusterIP","LoadBalancer","HostPort"]
+      default: "ClusterIP"
+      label: "Ingress/Loadbalancer"
+      description: "Use ingress or loadbalancing"
+    - variable: service.snmptrap.servicegroup
+      type: string
+      default: mid-servers
+      label: "Shared IP Group"
+      description: "May share IP with services in this group"
+
+- variable: service.event.enabled
+  description: "Expose Event port for collection"
+  label: Expose event port
+  type: boolean
+  default: false
+  group: "Service Ports"
+  show_subquestion_if: true
+  subquestions:
+    - variable: service.event.port
+      default: 8097
+      type: int
+      label: Event ContainerPort Number
+    - variable: service.event.protocol
+      default: "TCP"
+      options: ["UDP","TCP"]
+      type: enum
+      label: Protocol
+    - variable: service.event.type
       default: ClusterIP
       type: enum
       options: ["ClusterIP","LoadBalancer"]
       default: "ClusterIP"
       label: "Ingress/Loadbalancer"
       description: "Use ingress or loadbalancing"
-    - variable: service.servicegroup
+    - variable: service.event.servicegroup
       type: string
       default: mid-servers
       label: "Shared IP Group"

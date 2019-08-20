@@ -8,10 +8,22 @@ metadata:
 {{ include "mid-server.labels.standard" . | indent 4 }}
 spec:
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.name }}
-      protocol: {{ .Values.service.protocol }}
-      name: {{ .Values.service.name }}
+    {{- if .Values.service.event.enabled }}
+    - port: {{ .Values.service.event.containerPort }}
+      targetPort: {{ .Values.service.event.name }}
+      protocol: {{ .Values.service.event.protocol }}
+      name: {{ .Values.service.event.name }}
+    {{- else if and (.Values.service.snmptrap.enabled) (eq .Values.service.snmptrap.type "ClusterIP") }}
+    - port: {{ .Values.service.snmptrap.containerPort }}
+      targetPort: {{ .Values.service.snmptrap.name }}
+      protocol: {{ .Values.service.snmptrap.protocol }}
+      name: {{ .Values.service.snmptrap.name }}
+    {{- else }}
+    - port: 42
+      name: default
+      protocol: TCP
+      targetPort: 42
+    {{- end }}
   selector:
     app.kubernetes.io/name: {{ include "mid-server.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
