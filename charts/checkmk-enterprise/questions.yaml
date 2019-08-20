@@ -149,6 +149,18 @@ questions:
     type: hostname
     required: true
     label: hostname
+- variable: nodeAffinity.enabled
+  description: "Required node label"
+  label: Node label
+  type: boolean
+  default: false
+  group: "Affinity"
+  show_subquestion_if: true
+  subquestions:
+    - variable: nodeAffinity.label
+      default: "checkmk"
+      type: string
+      label: Node Label
 - variable: podAntiAffinity
   description: "Hard: required on scheduling, soft: preferred on scheduling"
   label: Pod Anti Affinity

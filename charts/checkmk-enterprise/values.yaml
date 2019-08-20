@@ -78,3 +78,7 @@ nodeSelector: {}
 tolerations: []
 
 podAntiAffinity: soft
+
+nodeAffinity:
+  enabled: false
+  label: checkmk

@@ -19,8 +19,16 @@ spec:
         app.kubernetes.io/name: {{ include "checkmk-enterprise.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-      {{- if eq .Values.podAntiAffinity "hard" }}
       affinity:
+        {{- if .Values.nodeAffinity.enabled }}
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: {{ .Values.nodeAffinity.label | quote }}
+                operator: Exists
+        {{- end }}
+      {{- if eq .Values.podAntiAffinity "hard" }}
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - topologyKey: "kubernetes.io/hostname"
@@ -28,7 +36,6 @@ spec:
               matchLabels:
                 app.kubernetes.io/name: {{ template "checkmk-enterprise.name" . }}
       {{- else if eq .Values.podAntiAffinity "soft" }}
-      affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
           - weight: 1
